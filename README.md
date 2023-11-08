@@ -106,13 +106,13 @@ echo '清华ubunt14.04 apt源' >  /etc/apt/sources.list
 apt update
 ```
 
-#### 安装 gcc、qemu
+#### 安装 gcc、gdb、qemu
 ```shell
-apt install build-essential
+apt install build-essential gdb
 apt install qemu-system-x86
 ```
 
-#### 编译
+#### 编译、运行
 ```shell
 cd /crk/xv6-x86/
 make clean
@@ -120,4 +120,30 @@ make qemu-nox
 #正常编译, 正常启动qemu
 
 #备注:  qemu-nox: 即 -nographic 
+```
+
+#### 调试
+##### 准备
+```shell
+echo 'add-auto-load-safe-path /crk/xv6-x86/.gdbinit' >   /root/.gdbinit
+```
+
+##### gdb调试
+1. gdb-server窗口
+```shell
+cd /crk/xv6-x86/
+make qemu-nox-gdb
+#gdb-server在25000端口等待
+```
+
+
+2. gdb窗口
+```shell
+
+cd /crk/xv6-x86/
+gdb
+#即连接到25000端口的gdb-server，可以开始正常调试
+
+
+#备注:  /crk/xv6-x86/.gdbinit 中配置了 连接25000端口
 ```
