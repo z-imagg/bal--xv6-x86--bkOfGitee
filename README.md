@@ -27,3 +27,8 @@ sudo  apt install    qemu-system-x86
  make -nB qemu
 ```
 
+> [make_-nB_qemu.log](https://gitcode.net/crk/xv6-public/-/blob/master/study/make_-nB_qemu.log)
+
+
+
+> [展开的Makefile比对: xv6-x86 和 xv6-riscv （仅kernel部分）](https://gitcode.net/crk/xv6-public/-/raw/main/study/xv6--x86-cmp-riscv.png)
