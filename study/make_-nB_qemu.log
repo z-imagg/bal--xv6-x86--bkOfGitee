@@ -15,50 +15,50 @@ OBJCOPY=objcopy
 OBJDUMP=objdump
 
 K=.
-$CC $CFLAGS1 -fno-pic -O -nostdinc -I. -c $K/bootmain.c
-$CC $CFLAGS1 -fno-pic -nostdinc -I. -c bootasm.S
-$LD $bootblock_Ld_FLAGS -o $K/bootblock.o $K/bootasm.o $K/bootmain.o
-$OBJDUMP -S $K/bootblock.o > bootblock.asm
-$OBJCOPY -S -O binary -j .text $K/bootblock.o bootblock
+$CC $CFLAGS1 -fno-pic -O -nostdinc -I. -c $kernel/bootmain.c
+$CC $CFLAGS1 -fno-pic -nostdinc -I. -c $kernel/bootasm.S
+$LD $bootblock_Ld_FLAGS -o $kernel/bootblock.o $kernel/bootasm.o $kernel/bootmain.o
+$OBJDUMP -S $kernel/bootblock.o > bootblock.asm
+$OBJCOPY -S -O binary -j .text $kernel/bootblock.o bootblock
 ./sign.pl bootblock
-$CC $CFLAGS1   -c -o $K/bio.o $K/bio.c
-$CC $CFLAGS1   -c -o $K/console.o $K/console.c
-$CC $CFLAGS1   -c -o $K/exec.o $K/exec.c
-$CC $CFLAGS1   -c -o $K/file.o $K/file.c
-$CC $CFLAGS1   -c -o $K/fs.o $K/fs.c
-$CC $CFLAGS1   -c -o $K/ide.o $K/ide.c
-$CC $CFLAGS1   -c -o $K/ioapic.o $K/ioapic.c
-$CC $CFLAGS1   -c -o $K/kalloc.o $K/kalloc.c
-$CC $CFLAGS1   -c -o $K/kbd.o $K/kbd.c
-$CC $CFLAGS1   -c -o $K/lapic.o $K/lapic.c
-$CC $CFLAGS1   -c -o $K/log.o $K/log.c
-$CC $CFLAGS1   -c -o $K/main.o $K/main.c
-$CC $CFLAGS1   -c -o $K/mp.o $K/mp.c
-$CC $CFLAGS1   -c -o $K/picirq.o $K/picirq.c
-$CC $CFLAGS1   -c -o $K/pipe.o $K/pipe.c
-$CC $CFLAGS1   -c -o $K/proc.o $K/proc.c
-$CC $CFLAGS1   -c -o $K/sleeplock.o $K/sleeplock.c
-$CC $CFLAGS1   -c -o $K/spinlock.o $K/spinlock.c
-$CC $CFLAGS1   -c -o $K/string.o $K/string.c
-$CC $S_FLAGS   -c -o $K/swtch.o swtch.S
-$CC $CFLAGS1   -c -o $K/syscall.o $K/syscall.c
-$CC $CFLAGS1   -c -o $K/sysfile.o $K/sysfile.c
-$CC $CFLAGS1   -c -o $K/sysproc.o $K/sysproc.c
-$CC $S_FLAGS   -c -o $K/trapasm.o trapasm.S
-$CC $CFLAGS1   -c -o $K/trap.o $K/trap.c
-$CC $CFLAGS1   -c -o $K/uart.o $K/uart.c
-./vectors.pl > vectors.S
-$CC $S_FLAGS   -c -o $K/vectors.o vectors.S
-$CC $CFLAGS1   -c -o $K/vm.o $K/vm.c
-$CC $S_FLAGS   -c -o $K/entry.o entry.S
-$CC $CFLAGS1 -fno-pic -nostdinc -I. -c entryother.S
-$LD $bootblockother_Ld_FLAGS -o $K/bootblockother.o $K/entryother.o
-$OBJCOPY -S -O binary -j .text $K/bootblockother.o entryother
-$OBJDUMP -S $K/bootblockother.o > entryother.asm
-$CC $CFLAGS1 -nostdinc -I. -c initcode.S
-$LD $initcode_Ld_FLAGS -o $K/initcode.out $K/initcode.o
-$OBJCOPY -S -O binary $K/initcode.out initcode
-$OBJDUMP -S $K/initcode.o > initcode.asm
+$CC $CFLAGS1   -c -o $kernel/console.o $kernel/console.c
+$CC $CFLAGS1   -c -o $kernel/ide.o $kernel/ide.c
+$CC $CFLAGS1   -c -o $kernel/ioapic.o $kernel/ioapic.c
+$CC $CFLAGS1   -c -o $kernel/uart.o $kernel/uart.c
+$CC $CFLAGS1   -c -o $kernel/kalloc.o $kernel/kalloc.c
+$CC $CFLAGS1   -c -o $kernel/kbd.o $kernel/kbd.c
+$CC $CFLAGS1   -c -o $kernel/lapic.o $kernel/lapic.c
+$CC $CFLAGS1   -c -o $kernel/spinlock.o $kernel/spinlock.c
+$CC $CFLAGS1   -c -o $kernel/string.o $kernel/string.c
+$CC $CFLAGS1   -c -o $kernel/main.o $kernel/main.c
+$CC $CFLAGS1   -c -o $kernel/mp.o $kernel/mp.c
+$CC $CFLAGS1   -c -o $kernel/vm.o $kernel/vm.c
+$CC $CFLAGS1   -c -o $kernel/picirq.o $kernel/picirq.c
+$CC $CFLAGS1   -c -o $kernel/proc.o $kernel/proc.c
+$CC $S_FLAGS   -c -o $kernel/swtch.o $kernel/swtch.S
+$CC $CFLAGS1   -c -o $kernel/trap.o $kernel/trap.c
+$CC $CFLAGS1   -c -o $kernel/syscall.o $kernel/syscall.c
+$CC $CFLAGS1   -c -o $kernel/sysproc.o $kernel/sysproc.c
+$CC $S_FLAGS   -c -o $kernel/trapasm.o $kernel/trapasm.S
+$CC $CFLAGS1   -c -o $kernel/bio.o $kernel/bio.c
+$CC $CFLAGS1   -c -o $kernel/fs.o $kernel/fs.c
+$CC $CFLAGS1   -c -o $kernel/log.o $kernel/log.c
+$CC $CFLAGS1   -c -o $kernel/sleeplock.o $kernel/sleeplock.c
+$CC $CFLAGS1   -c -o $kernel/file.o $kernel/file.c
+$CC $S_FLAGS   -c -o $kernel/entry.o $kernel/entry.S
+$CC $CFLAGS1   -c -o $kernel/pipe.o $kernel/pipe.c
+$CC $CFLAGS1   -c -o $kernel/exec.o $kernel/exec.c
+$CC $CFLAGS1 -fno-pic -nostdinc -I. -c $kernel/entryother.S
+$CC $CFLAGS1   -c -o $kernel/sysfile.o $kernel/sysfile.c
+$CC $S_FLAGS   -c -o $kernel/vectors.o $kernel/vectors.S
+./vectors.pl > $kernel/vectors.S
+$LD $bootblockother_Ld_FLAGS -o $kernel/bootblockother.o $kernel/entryother.o
+$OBJCOPY -S -O binary -j .text $kernel/bootblockother.o entryother
+$OBJDUMP -S $kernel/bootblockother.o > entryother.asm
+$CC $CFLAGS1 -nostdinc -I. -c $kernel/initcode.S
+$LD $initcode_Ld_FLAGS -o $kernel/initcode.out $kernel/initcode.o
+$OBJCOPY -S -O binary $kernel/initcode.out initcode
+$OBJDUMP -S $kernel/initcode.o > initcode.asm
 $LD $elf_i386_FLAGS -T $kernelLd -o kernel $kernelObjFiles  -b binary initcode entryother
 $OBJDUMP -S kernel > kernel.asm
 $OBJDUMP -t kernel | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > kernel.sym
