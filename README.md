@@ -1,6 +1,11 @@
 
+> 原git仓库 [xv6-x86(xv6-public)](https://github.com/mit-pdos/xv6-public.git) 
 
-> [xv6-x86(xv6-public)](https://github.com/mit-pdos/xv6-public.git) 文档 [mit 6.828/2023/](https://pdos.csail.mit.edu/6.828/2023/)
+> 文档 [mit 6.828/2023/](https://pdos.csail.mit.edu/6.828/2023/)
+
+
+> 文档 [MIT 6.828/2018/xv6/book-rev11.pdf](https://pdos.csail.mit.edu/6.828/2018/xv6/book-rev11.pdf)
+
 
 > [原readme](https://github.com/mit-pdos/xv6-public/blob/master/README)
 
