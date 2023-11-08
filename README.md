@@ -1,8 +1,10 @@
-> xv6-x86(xv6-public) 已经被放弃了, 原作者转向了[xv6-riscv](https://github.com/mit-pdos/xv6-riscv.git)
-> xv6-x86(xv6-public)文档 [mit 6.828/2023/](https://pdos.csail.mit.edu/6.828/2023/)
 
-> [原readme](https://gitcode.net/crk/xv6-public/-/blob/main/README)
 
+> [xv6-x86(xv6-public)](https://github.com/mit-pdos/xv6-public.git) 文档 [mit 6.828/2023/](https://pdos.csail.mit.edu/6.828/2023/)
+
+> [原readme](https://github.com/mit-pdos/xv6-public/blob/master/README)
+
+> 注：  xv6-x86(xv6-public) 已经被放弃了, 原作者转向了[xv6-riscv](https://github.com/mit-pdos/xv6-riscv.git)
 # 环境
 ```bash
 uname -a
