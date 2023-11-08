@@ -1,4 +1,3 @@
-
 > 原git仓库 [xv6-x86(xv6-public)](https://github.com/mit-pdos/xv6-public.git) 
 
 > 文档 [mit 6.828/2023/](https://pdos.csail.mit.edu/6.828/2023/)
@@ -9,7 +8,10 @@
 
 > [原readme](https://github.com/mit-pdos/xv6-public/blob/master/README)
 
-> 注：  xv6-x86(xv6-public) 已经被放弃了, 原作者转向了[xv6-riscv](https://github.com/mit-pdos/xv6-riscv.git)
+> 注：  
+-  xv6-x86(xv6-public) 已经被放弃了, 原作者转向了[xv6-riscv](https://github.com/mit-pdos/xv6-riscv.git)
+-  xv6-x86文档来源:[mit-pdos/xv6-book.git](https://github.com/mit-pdos/xv6-book.git), 它需要 heirloom-doctools 来编译成pdf，但 heirloom-doctools太旧了 ，估计要ubuntu16或14能编译此pdf？猜测 编译出来的pdf就是  [MIT 6.828/2018/xv6/book-rev11.pdf](https://pdos.csail.mit.edu/6.828/2018/xv6/book-rev11.pdf)，因此不需要自己编译pdf了
+
 # 环境
 ```bash
 uname -a
