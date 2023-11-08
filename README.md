@@ -41,3 +41,83 @@ sudo  apt install    qemu-system-x86
 
 
 > [展开的Makefile比对: xv6-x86 和 xv6-riscv （仅kernel部分）](https://gitcode.net/crk/xv6-public/-/raw/main/study/xv6--x86-cmp-riscv.png)
+
+# 在ubuntu23.04 x64下编译 xv6-x86代码, make时各种报错. 需要转移到老版本ubuntu14.04 i386下编译xv6-x86
+> 比如
+```
+z@mm:/crk/xv6-x86$ make qemu
+
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -O2 -Wall -MD -ggdb -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector -fno-pie -no-pie   -c -o sh.o sh.c
+sh.c: In function ‘runcmd’:
+sh.c:58:1: error: infinite recursion detected [-Werror=infinite-recursion]
+
+
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -O2 -Wall -MD -ggdb -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector -fno-pie -no-pie   -c -o sh.o sh.c
+sh.c:57:1: error: attributes should be specified before the declarator in a function definition
+   57 | void
+      | ^~~~
+sh.c: In function ‘main’:
+sh.c:168:7: error: implicit declaration of function ‘runcmd’ [-Werror=implicit-function-declaration]
+  168 |       runcmd(parsecmd(buf));
+
+
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -O2 -Wall -MD -ggdb -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector -fno-pie -no-pie   -c -o mp.o mp.c
+In function ‘mpconfig’,
+    inlined from ‘mpinit’ at mp.c:101:14:
+mp.c:83:10: error: array subscript -48806446 is outside array bounds of ‘void[2147483647]’ [-Werror=array-bounds]
+   83 |   if(conf->version != 1 && conf->version != 4)
+
+```
+
+# ubuntu14.04 i386 @docker
+
+## docker安装
+> 省略
+
+## docker镜像加速
+```shell
+cat /etc/docker/daemon.json 
+{
+"registry-mirrors":"https://xxxx.mirror.aliyuncs.com"
+}
+
+#登陆阿里云官网 --->  docker镜像加速 ---> https://xxxx.mirror.aliyuncs.com  （xxxx是每个个人阿里云账户不同）
+```
+
+## xxx
+### ubuntu 14.04 docker镜像
+> 在这里找到了 ubuntu 14.04 docker镜像名： [hub.docker ](https://hub.docker.com/r/i386/ubuntu/tags?page=1&name=14.04)
+```shell
+sudo docker pull i386/ubuntu:14.04
+sudo docker run --name ubuntu-1404-i386-a -itd -v /crk:/crk i386/ubuntu:14.04
+```
+
+### ubuntu 14.04 docker实例 内 编译 xv6-x86
+#### 进入docker实例终端
+>进入docker该实例终端```sudo docker exec -it  ubuntu-1404-i386-a bash```：
+
+
+#### apt国内源配置
+
+> apt国内源:
+```shell
+# https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/
+echo '清华ubunt14.04 apt源' >  /etc/apt/sources.list
+apt update
+```
+
+#### 安装 gcc、qemu
+```shell
+apt install build-essential
+apt install qemu-system-x86
+```
+
+#### 编译
+```shell
+cd /crk/xv6-x86/
+make clean
+make qemu-nox
+#正常编译, 正常启动qemu
+
+#备注:  qemu-nox: 即 -nographic 
+```
