@@ -9,121 +9,129 @@ ulib_usys_o="ulib.o usys.o"
 commonUserObjFiles="ulib.o usys.o printf.o umalloc.o"
 kernelObjFiles="entry.o bio.o console.o exec.o file.o fs.o ide.o ioapic.o kalloc.o kbd.o lapic.o log.o main.o mp.o picirq.o pipe.o proc.o sleeplock.o spinlock.o string.o swtch.o syscall.o sysfile.o sysproc.o trapasm.o trap.o uart.o vectors.o vm.o"
 S_FLAGS="-m32 -gdwarf-2 -Wa,-divide"
-gcc -Werror -Wall -o mkfs mkfs.c
-gcc $CFLAGS1   -c -o cat.o cat.c
-gcc $CFLAGS1   -c -o ulib.o ulib.c
-gcc $S_FLAGS   -c -o usys.o usys.S
-gcc $CFLAGS1   -c -o printf.o printf.c
-gcc $CFLAGS1   -c -o umalloc.o umalloc.c
-ld $user_Ld_FLAGS -o _cat cat.o $commonUserObjFiles
-objdump -S _cat > cat.asm
-objdump -t _cat | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > cat.sym
-gcc $CFLAGS1   -c -o echo.o echo.c
-ld $user_Ld_FLAGS -o _echo echo.o $commonUserObjFiles
-objdump -S _echo > echo.asm
-objdump -t _echo | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > echo.sym
-gcc $CFLAGS1   -c -o forktest.o forktest.c
-# forktest has less library code linked in - needs to be small
-# in order to be able to max out the proc table.
-ld $user_Ld_FLAGS -o _forktest forktest.o $ulib_usys_o
-objdump -S _forktest > forktest.asm
-gcc $CFLAGS1   -c -o grep.o grep.c
-ld $user_Ld_FLAGS -o _grep grep.o $commonUserObjFiles
-objdump -S _grep > grep.asm
-objdump -t _grep | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > grep.sym
-gcc $CFLAGS1   -c -o init.o init.c
-ld $user_Ld_FLAGS -o _init init.o $commonUserObjFiles
-objdump -S _init > init.asm
-objdump -t _init | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > init.sym
-gcc $CFLAGS1   -c -o kill.o kill.c
-ld $user_Ld_FLAGS -o _kill kill.o $commonUserObjFiles
-objdump -S _kill > kill.asm
-objdump -t _kill | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > kill.sym
-gcc $CFLAGS1   -c -o ln.o ln.c
-ld $user_Ld_FLAGS -o _ln ln.o $commonUserObjFiles
-objdump -S _ln > ln.asm
-objdump -t _ln | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > ln.sym
-gcc $CFLAGS1   -c -o ls.o ls.c
-ld $user_Ld_FLAGS -o _ls ls.o $commonUserObjFiles
-objdump -S _ls > ls.asm
-objdump -t _ls | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > ls.sym
-gcc $CFLAGS1   -c -o mkdir.o mkdir.c
-ld $user_Ld_FLAGS -o _mkdir mkdir.o $commonUserObjFiles
-objdump -S _mkdir > mkdir.asm
-objdump -t _mkdir | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > mkdir.sym
-gcc $CFLAGS1   -c -o rm.o rm.c
-ld $user_Ld_FLAGS -o _rm rm.o $commonUserObjFiles
-objdump -S _rm > rm.asm
-objdump -t _rm | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > rm.sym
-gcc $CFLAGS1   -c -o sh.o sh.c
-ld $user_Ld_FLAGS -o _sh sh.o $commonUserObjFiles
-objdump -S _sh > sh.asm
-objdump -t _sh | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > sh.sym
-gcc $CFLAGS1   -c -o stressfs.o stressfs.c
-ld $user_Ld_FLAGS -o _stressfs stressfs.o $commonUserObjFiles
-objdump -S _stressfs > stressfs.asm
-objdump -t _stressfs | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > stressfs.sym
-gcc $CFLAGS1   -c -o usertests.o usertests.c
-ld $user_Ld_FLAGS -o _usertests usertests.o $commonUserObjFiles
-objdump -S _usertests > usertests.asm
-objdump -t _usertests | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > usertests.sym
-gcc $CFLAGS1   -c -o wc.o wc.c
-ld $user_Ld_FLAGS -o _wc wc.o $commonUserObjFiles
-objdump -S _wc > wc.asm
-objdump -t _wc | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > wc.sym
-gcc $CFLAGS1   -c -o zombie.o zombie.c
-ld $user_Ld_FLAGS -o _zombie zombie.o $commonUserObjFiles
-objdump -S _zombie > zombie.asm
-objdump -t _zombie | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > zombie.sym
-./mkfs fs.img README _cat _echo _forktest _grep _init _kill _ln _ls _mkdir _rm _sh _stressfs _usertests _wc _zombie 
-gcc $CFLAGS1 -fno-pic -O -nostdinc -I. -c bootmain.c
-gcc $CFLAGS1 -fno-pic -nostdinc -I. -c bootasm.S
-ld $bootblock_Ld_FLAGS -o bootblock.o bootasm.o bootmain.o
-objdump -S bootblock.o > bootblock.asm
-objcopy -S -O binary -j .text bootblock.o bootblock
+CC=AAgcc
+LD=ld
+OBJCOPY=objcopy
+OBJDUMP=objdump
+
+K=.
+$CC $CFLAGS1 -fno-pic -O -nostdinc -I. -c $kernel/bootmain.c
+$CC $CFLAGS1 -fno-pic -nostdinc -I. -c $kernel/bootasm.S
+$LD $bootblock_Ld_FLAGS -o $kernel/bootblock.o $kernel/bootasm.o $kernel/bootmain.o
+$OBJDUMP -S $kernel/bootblock.o > bootblock.asm
+$OBJCOPY -S -O binary -j .text $kernel/bootblock.o bootblock
 ./sign.pl bootblock
-gcc $CFLAGS1   -c -o bio.o bio.c
-gcc $CFLAGS1   -c -o console.o console.c
-gcc $CFLAGS1   -c -o exec.o exec.c
-gcc $CFLAGS1   -c -o file.o file.c
-gcc $CFLAGS1   -c -o fs.o fs.c
-gcc $CFLAGS1   -c -o ide.o ide.c
-gcc $CFLAGS1   -c -o ioapic.o ioapic.c
-gcc $CFLAGS1   -c -o kalloc.o kalloc.c
-gcc $CFLAGS1   -c -o kbd.o kbd.c
-gcc $CFLAGS1   -c -o lapic.o lapic.c
-gcc $CFLAGS1   -c -o log.o log.c
-gcc $CFLAGS1   -c -o main.o main.c
-gcc $CFLAGS1   -c -o mp.o mp.c
-gcc $CFLAGS1   -c -o picirq.o picirq.c
-gcc $CFLAGS1   -c -o pipe.o pipe.c
-gcc $CFLAGS1   -c -o proc.o proc.c
-gcc $CFLAGS1   -c -o sleeplock.o sleeplock.c
-gcc $CFLAGS1   -c -o spinlock.o spinlock.c
-gcc $CFLAGS1   -c -o string.o string.c
-gcc $S_FLAGS   -c -o swtch.o swtch.S
-gcc $CFLAGS1   -c -o syscall.o syscall.c
-gcc $CFLAGS1   -c -o sysfile.o sysfile.c
-gcc $CFLAGS1   -c -o sysproc.o sysproc.c
-gcc $S_FLAGS   -c -o trapasm.o trapasm.S
-gcc $CFLAGS1   -c -o trap.o trap.c
-gcc $CFLAGS1   -c -o uart.o uart.c
-./vectors.pl > vectors.S
-gcc $S_FLAGS   -c -o vectors.o vectors.S
-gcc $CFLAGS1   -c -o vm.o vm.c
-gcc $S_FLAGS   -c -o entry.o entry.S
-gcc $CFLAGS1 -fno-pic -nostdinc -I. -c entryother.S
-ld $bootblockother_Ld_FLAGS -o bootblockother.o entryother.o
-objcopy -S -O binary -j .text bootblockother.o entryother
-objdump -S bootblockother.o > entryother.asm
-gcc $CFLAGS1 -nostdinc -I. -c initcode.S
-ld $initcode_Ld_FLAGS -o initcode.out initcode.o
-objcopy -S -O binary initcode.out initcode
-objdump -S initcode.o > initcode.asm
-ld $elf_i386_FLAGS -T $kernelLd -o kernel $kernelObjFiles  -b binary initcode entryother
-objdump -S kernel > kernel.asm
-objdump -t kernel | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > kernel.sym
+$CC $CFLAGS1   -c -o $kernel/console.o $kernel/console.c
+$CC $CFLAGS1   -c -o $kernel/ide.o $kernel/ide.c
+$CC $CFLAGS1   -c -o $kernel/ioapic.o $kernel/ioapic.c
+$CC $CFLAGS1   -c -o $kernel/uart.o $kernel/uart.c
+$CC $CFLAGS1   -c -o $kernel/kalloc.o $kernel/kalloc.c
+$CC $CFLAGS1   -c -o $kernel/kbd.o $kernel/kbd.c
+$CC $CFLAGS1   -c -o $kernel/lapic.o $kernel/lapic.c
+$CC $CFLAGS1   -c -o $kernel/spinlock.o $kernel/spinlock.c
+$CC $CFLAGS1   -c -o $kernel/string.o $kernel/string.c
+$CC $CFLAGS1   -c -o $kernel/main.o $kernel/main.c
+$CC $CFLAGS1   -c -o $kernel/mp.o $kernel/mp.c
+$CC $CFLAGS1   -c -o $kernel/vm.o $kernel/vm.c
+$CC $CFLAGS1   -c -o $kernel/picirq.o $kernel/picirq.c
+$CC $CFLAGS1   -c -o $kernel/proc.o $kernel/proc.c
+$CC $S_FLAGS   -c -o $kernel/swtch.o $kernel/swtch.S
+$CC $CFLAGS1   -c -o $kernel/trap.o $kernel/trap.c
+$CC $CFLAGS1   -c -o $kernel/syscall.o $kernel/syscall.c
+$CC $CFLAGS1   -c -o $kernel/sysproc.o $kernel/sysproc.c
+$CC $S_FLAGS   -c -o $kernel/trapasm.o $kernel/trapasm.S
+$CC $CFLAGS1   -c -o $kernel/bio.o $kernel/bio.c
+$CC $CFLAGS1   -c -o $kernel/fs.o $kernel/fs.c
+$CC $CFLAGS1   -c -o $kernel/log.o $kernel/log.c
+$CC $CFLAGS1   -c -o $kernel/sleeplock.o $kernel/sleeplock.c
+$CC $CFLAGS1   -c -o $kernel/file.o $kernel/file.c
+$CC $S_FLAGS   -c -o $kernel/entry.o $kernel/entry.S
+$CC $CFLAGS1   -c -o $kernel/pipe.o $kernel/pipe.c
+$CC $CFLAGS1   -c -o $kernel/exec.o $kernel/exec.c
+$CC $CFLAGS1 -fno-pic -nostdinc -I. -c $kernel/entryother.S
+$CC $CFLAGS1   -c -o $kernel/sysfile.o $kernel/sysfile.c
+$CC $S_FLAGS   -c -o $kernel/vectors.o $kernel/vectors.S
+./vectors.pl > $kernel/vectors.S
+$LD $bootblockother_Ld_FLAGS -o $kernel/bootblockother.o $kernel/entryother.o
+$OBJCOPY -S -O binary -j .text $kernel/bootblockother.o entryother
+$OBJDUMP -S $kernel/bootblockother.o > entryother.asm
+$CC $CFLAGS1 -nostdinc -I. -c $kernel/initcode.S
+$LD $initcode_Ld_FLAGS -o $kernel/initcode.out $kernel/initcode.o
+$OBJCOPY -S -O binary $kernel/initcode.out initcode
+$OBJDUMP -S $kernel/initcode.o > initcode.asm
+$LD $elf_i386_FLAGS -T $kernelLd -o kernel $kernelObjFiles  -b binary initcode entryother
+$OBJDUMP -S kernel > kernel.asm
+$OBJDUMP -t kernel | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > kernel.sym
 dd if=/dev/zero of=xv6.img count=10000
 dd if=bootblock of=xv6.img conv=notrunc
 dd if=kernel of=xv6.img seek=1 conv=notrunc
+
+$CC -Werror -Wall -o mkfs mkfs.c
+$CC $CFLAGS1   -c -o cat.o cat.c
+$CC $CFLAGS1   -c -o ulib.o ulib.c
+$CC $S_FLAGS   -c -o usys.o usys.S
+$CC $CFLAGS1   -c -o printf.o printf.c
+$CC $CFLAGS1   -c -o umalloc.o umalloc.c
+$LD $user_Ld_FLAGS -o _cat cat.o $commonUserObjFiles
+$OBJDUMP -S _cat > cat.asm
+$OBJDUMP -t _cat | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > cat.sym
+$CC $CFLAGS1   -c -o echo.o echo.c
+$LD $user_Ld_FLAGS -o _echo echo.o $commonUserObjFiles
+$OBJDUMP -S _echo > echo.asm
+$OBJDUMP -t _echo | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > echo.sym
+$CC $CFLAGS1   -c -o forktest.o forktest.c
+# forktest has less library code linked in - needs to be small
+# in order to be able to max out the proc table.
+$LD $user_Ld_FLAGS -o _forktest forktest.o $ulib_usys_o
+$OBJDUMP -S _forktest > forktest.asm
+$CC $CFLAGS1   -c -o grep.o grep.c
+$LD $user_Ld_FLAGS -o _grep grep.o $commonUserObjFiles
+$OBJDUMP -S _grep > grep.asm
+$OBJDUMP -t _grep | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > grep.sym
+$CC $CFLAGS1   -c -o init.o init.c
+$LD $user_Ld_FLAGS -o _init init.o $commonUserObjFiles
+$OBJDUMP -S _init > init.asm
+$OBJDUMP -t _init | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > init.sym
+$CC $CFLAGS1   -c -o kill.o kill.c
+$LD $user_Ld_FLAGS -o _kill kill.o $commonUserObjFiles
+$OBJDUMP -S _kill > kill.asm
+$OBJDUMP -t _kill | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > kill.sym
+$CC $CFLAGS1   -c -o ln.o ln.c
+$LD $user_Ld_FLAGS -o _ln ln.o $commonUserObjFiles
+$OBJDUMP -S _ln > ln.asm
+$OBJDUMP -t _ln | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > ln.sym
+$CC $CFLAGS1   -c -o ls.o ls.c
+$LD $user_Ld_FLAGS -o _ls ls.o $commonUserObjFiles
+$OBJDUMP -S _ls > ls.asm
+$OBJDUMP -t _ls | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > ls.sym
+$CC $CFLAGS1   -c -o mkdir.o mkdir.c
+$LD $user_Ld_FLAGS -o _mkdir mkdir.o $commonUserObjFiles
+$OBJDUMP -S _mkdir > mkdir.asm
+$OBJDUMP -t _mkdir | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > mkdir.sym
+$CC $CFLAGS1   -c -o rm.o rm.c
+$LD $user_Ld_FLAGS -o _rm rm.o $commonUserObjFiles
+$OBJDUMP -S _rm > rm.asm
+$OBJDUMP -t _rm | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > rm.sym
+$CC $CFLAGS1   -c -o sh.o sh.c
+$LD $user_Ld_FLAGS -o _sh sh.o $commonUserObjFiles
+$OBJDUMP -S _sh > sh.asm
+$OBJDUMP -t _sh | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > sh.sym
+$CC $CFLAGS1   -c -o stressfs.o stressfs.c
+$LD $user_Ld_FLAGS -o _stressfs stressfs.o $commonUserObjFiles
+$OBJDUMP -S _stressfs > stressfs.asm
+$OBJDUMP -t _stressfs | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > stressfs.sym
+$CC $CFLAGS1   -c -o usertests.o usertests.c
+$LD $user_Ld_FLAGS -o _usertests usertests.o $commonUserObjFiles
+$OBJDUMP -S _usertests > usertests.asm
+$OBJDUMP -t _usertests | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > usertests.sym
+$CC $CFLAGS1   -c -o wc.o wc.c
+$LD $user_Ld_FLAGS -o _wc wc.o $commonUserObjFiles
+$OBJDUMP -S _wc > wc.asm
+$OBJDUMP -t _wc | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > wc.sym
+$CC $CFLAGS1   -c -o zombie.o zombie.c
+$LD $user_Ld_FLAGS -o _zombie zombie.o $commonUserObjFiles
+$OBJDUMP -S _zombie > zombie.asm
+$OBJDUMP -t _zombie | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > zombie.sym
+./mkfs fs.img README _cat _echo _forktest _grep _init _kill _ln _ls _mkdir _rm _sh _stressfs _usertests _wc _zombie 
+
 qemu-system-i386 -serial mon:stdio -drive file=fs.img,index=1,media=disk,format=raw -drive file=xv6.img,index=0,media=disk,format=raw -smp 2 -m 512 
