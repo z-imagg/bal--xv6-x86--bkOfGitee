@@ -150,3 +150,7 @@ gdb
 
 #备注:  /crk/xv6-x86/.gdbinit 中配置了 连接25000端口
 ```
+
+
+# 学习
+> ![调用流程01：bootasm.S-->bootmain.c-->entry.S-->main.c](https://gitcode.net/crk/xv6-x86/-/raw/main/study/call_flow_01.png)
