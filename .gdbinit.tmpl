@@ -37,7 +37,7 @@ rwatch *(int*)(0x7c00-32)
 commands
     silent
 	# x /1w 0x7c00-32
-    printf "pa值为:%x\n", *(int*)(0x7c00-32)
+    printf "pa值为:0x%x\n", *(int*)(0x7c00-32)
 	continue
 end
 
