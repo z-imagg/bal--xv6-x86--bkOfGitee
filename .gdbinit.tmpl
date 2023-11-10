@@ -35,6 +35,7 @@ symbol-file kernel
 
 rwatch *(int*)(0x7c00-32)
 commands
+    silent
 	x /1w 0x7c00-32
 	continue
 end
