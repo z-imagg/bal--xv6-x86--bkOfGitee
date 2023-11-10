@@ -6,18 +6,13 @@ The target architecture is assumed to be i8086
 [f000:fff0]    0xffff0:	ljmp   $0xf000,$0xe05b
 0x0000fff0 in ?? ()
 + symbol-file kernel
-Breakpoint 1 at 0x7d84
+Hardware read watchpoint 1: *(int*)(0x7c00-32)
 The target architecture is assumed to be i386
-=> 0x7d84:	nop
-
-Breakpoint 1, 0x00007d84 in ?? ()
-eax            0x100000	1048576
-=> 0x7d84:	nop
-
-Breakpoint 1, 0x00007d84 in ?? ()
-eax            0x108000	1081344
-=> 0x7d84:	nop
-
-Breakpoint 1, 0x00007d84 in ?? ()
-eax            0x0	0
-
+=> 0x7d93:	mov    0x7bd0,%eax
+0x7be0:	0x00100000
+=> 0x7d93:	mov    0x7bd0,%eax
+0x7be0:	0x00108000
+=> 0x7d93:	mov    0x7bd0,%eax
+0x7be0:	0x00000000
+.gdbinit:43: Error in sourced command file:
+Remote connection closed
