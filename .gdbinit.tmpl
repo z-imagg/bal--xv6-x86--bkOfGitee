@@ -33,9 +33,9 @@ target remote localhost:26000
 echo + symbol-file kernel\n
 symbol-file kernel
 
-break *0x7d84
+break if (*(int*)(0x7c00-16))=0xBB77
 commands
-	info registers eax
+	x /1w 0x7c00-12
 	continue
 end
 
