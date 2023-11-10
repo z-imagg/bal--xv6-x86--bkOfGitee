@@ -1,0 +1,23 @@
++ target remote localhost:26000
+warning: A handler for the OS ABI "GNU/Linux" is not built into this configuration
+of GDB.  Attempting to continue with the default i8086 settings.
+
+The target architecture is assumed to be i8086
+[f000:fff0]    0xffff0:	ljmp   $0xf000,$0xe05b
+0x0000fff0 in ?? ()
++ symbol-file kernel
+Breakpoint 1 at 0x7d84
+The target architecture is assumed to be i386
+=> 0x7d84:	nop
+
+Breakpoint 1, 0x00007d84 in ?? ()
+eax            0x100000	1048576
+=> 0x7d84:	nop
+
+Breakpoint 1, 0x00007d84 in ?? ()
+eax            0x108000	1081344
+=> 0x7d84:	nop
+
+Breakpoint 1, 0x00007d84 in ?? ()
+eax            0x0	0
+

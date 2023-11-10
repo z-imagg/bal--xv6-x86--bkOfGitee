@@ -36,10 +36,10 @@ bootmain(void)
   eph = ph + elf->phnum;
   for(; ph < eph; ph++){
     pa = (uchar*)ph->paddr;
-    __asm__  __volatile__ ("nop \n\t"  "test %%edx,%0 \n\t"  : : "m"(pa) );// 正常查看pa值 
+    __asm__  __volatile__ ("test %%edx,%0 \n\t"  "nop \n\t"    : : "m"(pa) );// 正常查看pa值 
 	  /* gdb单步发现此两条指令如下:
-	  0x7d81  nop                                                                                                                                     │
-      0x7d82  test   %edx,-0x1c(%ebp) 
+		0x7d81  test   %edx,-0x1c(%ebp)                                                                                                                 │
+		0x7d84  nop                                                                                                                                    │
 	  */
     readseg(pa, ph->filesz, ph->off);
     if(ph->memsz > ph->filesz)
