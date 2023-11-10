@@ -1,0 +1,24 @@
+
+02.o:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000000 <f>:
+void f(){
+   0:	55                   	push   %ebp
+   1:	89 e5                	mov    %esp,%ebp
+   3:	83 ec 10             	sub    $0x10,%esp
+	int pa;
+    __asm__  __volatile__ (  "movl %%eax, 0x7b00 \n\t"  
+   6:	a3 00 7b 00 00       	mov    %eax,0x7b00
+   b:	8b 45 fc             	mov    -0x4(%ebp),%eax
+   e:	90                   	nop
+      "movl %0, %%eax \n\t"    
+      "nop \n\t"     
+      :  
+      : "m"(pa) 
+       );
+}
+   f:	c9                   	leave  
+  10:	c3                   	ret    
