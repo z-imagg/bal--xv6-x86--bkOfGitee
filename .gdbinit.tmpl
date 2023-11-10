@@ -33,9 +33,9 @@ target remote localhost:26000
 echo + symbol-file kernel\n
 symbol-file kernel
 
-awatch *(int*)(0x7c00-32)
+rwatch *(int*)(0x7c00-32)
 commands
-	x /2w 0x7c00-32
+	x /1w 0x7c00-32
 	continue
 end
 

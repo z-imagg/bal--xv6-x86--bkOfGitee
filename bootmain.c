@@ -42,7 +42,7 @@ bootmain(void)
 
       "movl %0, %%eax \n\t"   
       "movl %%eax, 0x7c00-32 \n\t"   //记录变量pa值
-      "movl 0x7c00-32,%%eax \n\t"   //无用读一次, 为了gdb awatch能奏效
+      "movl 0x7c00-32,%%eax \n\t"   //无用读一次, 为了gdb rwatch (内存读断点)能奏效
 
       "movl 0x7c00-48,%%eax  \n\t"   //恢复eax
       "nop \n\t"    
