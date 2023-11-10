@@ -36,6 +36,7 @@ symbol-file kernel
 watch *(int*)(0x7c00-16)
 commands
 	x /2w 0x7c00-32
+    watch *(int*)(0x7c00-16)
 	continue
 end
 
