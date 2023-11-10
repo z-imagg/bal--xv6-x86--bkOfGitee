@@ -36,6 +36,10 @@ bootmain(void)
   eph = ph + elf->phnum;
   for(; ph < eph; ph++){
     pa = (uchar*)ph->paddr;
+    asm volatile("nop \n\t" 
+    "test %edx,%1 \n\t"
+      :
+      : "m"(pa) );//草稿: 试图查看pa值
     readseg(pa, ph->filesz, ph->off);
     if(ph->memsz > ph->filesz)
       stosb(pa + ph->filesz, 0, ph->memsz - ph->filesz);
