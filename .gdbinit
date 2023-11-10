@@ -35,7 +35,7 @@ symbol-file kernel
 
 break if (*(int*)(0x7c00-16))=0xBB77
 commands
-	x /1w 0x7c00-12
+	x /2w 0x7c00-32
 	continue
 end
 
