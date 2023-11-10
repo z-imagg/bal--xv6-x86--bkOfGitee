@@ -129,6 +129,9 @@ echo 'add-auto-load-safe-path /crk/xv6-x86/.gdbinit' >   /root/.gdbinit
 ```
 
 ##### gdb调试
+> 详见：[两窗口调试：gdb-server、gdb ](https://gitcode.net/crk/xv6-riscv/-/raw/main/pic/gdb01.png)
+
+> 以下简单描述 '两窗口调试：gdb-server、gdb'
 1. gdb-server窗口
 ```shell
 cd /crk/xv6-x86/
@@ -147,3 +150,8 @@ gdb
 
 #备注:  /crk/xv6-x86/.gdbinit 中配置了 连接25000端口
 ```
+
+
+# 学习
+> 调用流程01：bootasm.S-->bootmain.c-->entry.S-->main.c 
+> ![调用流程01：bootasm.S-->bootmain.c-->entry.S-->main.c](https://gitcode.net/crk/xv6-x86/-/raw/main/study/call_flow_01.png)
