@@ -36,7 +36,19 @@ bootmain(void)
   eph = ph + elf->phnum;
   for(; ph < eph; ph++){
     pa = (uchar*)ph->paddr;
-    __asm__  __volatile__ ("movw $0XBB77, (0x7c00-16) \n\t"  "movw %0, %(0x7c00-12) \n\t"   "nop \n\t"    : : "m"(pa) );// 正常查看pa值 
+    __asm__  __volatile__ (
+      "movw $0XBB77, (0x7c00-16) \n\t"  //写内存标记 供gdb条件断点使用
+
+      "movl eax, (0x7c00-48) \n\t"   //备份eax
+
+      "movl %0, %%eax \n\t"   
+      "movw eax, (0x7c00-32) \n\t"   //记录变量pa值
+
+      "movl (0x7c00-48),eax  \n\t"   //恢复eax
+      "nop \n\t"    
+      : 
+      : "m"(pa)
+       );// 正常查看pa值 
 	  /* gdb单步发现此两条指令如下:
 		0x7d81  test   %edx,-0x1c(%ebp)                                                                                                                 │
 		0x7d84  nop                                                                                                                                    │
