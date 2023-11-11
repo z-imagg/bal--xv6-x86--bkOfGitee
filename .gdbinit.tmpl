@@ -33,7 +33,7 @@ target remote localhost:26000
 echo + symbol-file kernel\n
 symbol-file kernel
 
-rwatch *(int*)(0x7b00)
+rwatch *(long*)(0x7b00)
 commands
     silent
 	# x /1w edx #此行能正常打印, 但为了获得友好提示, 用了下一行printf

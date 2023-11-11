@@ -37,16 +37,23 @@ bootmain(void)
   for(; ph < eph; ph++){
     pa = (uchar*)ph->paddr;
     __asm__  __volatile__ (
-
-      "pusha \n\t"  
-      "pushfd \n\t"   //备份
+/**
+语法                 intel      AT&T(即GCC汇编)
+通用寄存器           pusha      pushal
+                    popa       popal  
+eflags状态寄存器     pushfd     pushfl  
+                    popfd      popfl  
+*/
+    //
+      "pushal \n\t"  
+      "pushfl \n\t"   //备份  
 
       "push %0 \n\t"   //目标值进栈
       "pop %%edx \n\t"   //目标值进edx
-      "test 0x7b00, $0 \n\t"   //'0x7b00' 读内存断点(gdb rwatch) , 断点触发时打印edx值即目标值
+      "TESTL 0x7b00, $0 \n\t"   //'0x7b00' 读内存断点(gdb rwatch) , 断点触发时打印edx值即目标值
 
-      "popfd  \n\t"   
-      "popa  \n\t"   //恢复
+      "popfl  \n\t"   
+      "popal  \n\t"   //恢复
 
       "nop \n\t"    //空指令标记供人工观测
       : 
