@@ -36,7 +36,6 @@ bootmain(void)
   eph = ph + elf->phnum;
   for(; ph < eph; ph++){
     pa = (uchar*)ph->paddr;
-    __asm__  __volatile__ (
 /**
 语法                 intel      AT&T(即GCC汇编)
 通用寄存器           pusha      pushal
@@ -44,7 +43,7 @@ bootmain(void)
 eflags状态寄存器     pushfd     pushfl  
                     popfd      popfl  
 */
-    //
+    __asm__  __volatile__ (
       "pushal \n\t"  
       "pushfl \n\t"   //备份  
 
