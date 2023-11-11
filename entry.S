@@ -98,4 +98,4 @@ eflags状态寄存器     pushfd     pushfl
   mov $main, %eax
   jmp *%eax
 
-.comm stack, KSTACKSIZE
+.comm stack, KSTACKSIZE #分配一片未初始化内存区域。 具体 为,   分配 其从当前位置开始KSTACKSIZE（0x1000 即4096 即4k）个字节 的内存区域 给符号stack，即stack值为这片内存区域的首字节地址 。   这片内存区域 作为 即将跳入的 main.c中的C语言函数main()的调用栈。
