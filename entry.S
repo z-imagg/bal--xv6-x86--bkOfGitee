@@ -57,6 +57,9 @@ entry:
 
   # Set up the stack pointer.
   movl $(stack + KSTACKSIZE), %esp
+  test $stack, %eax
+  test $KSTACKSIZE, %eax
+  test $(stack + KSTACKSIZE), %eax
 
   # Jump to main(), and switch to executing at
   # high addresses. The indirect call is needed because
