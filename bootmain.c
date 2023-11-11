@@ -61,7 +61,15 @@ eflags状态寄存器     pushfd     pushfl
       : "m"(pa) //gas inline汇编 （即 AT&T inline汇编） 当有变量带入时, %寄存器 改为 %%寄存器
        );// 
 	  /* gdb单步打印此些指令如下:
-
+0x7d85  nop
+0x7d86  pusha
+0x7d87  pushf
+0x7d88  pushl  -0x1c(%ebp)
+0x7d8b  pop    %edx
+0x7d8c  test   %ecx,0x7b00
+0x7d92  popf
+0x7d93  popa
+0x7d94  nop
 	  */
     readseg(pa, ph->filesz, ph->off);
     if(ph->memsz > ph->filesz)
