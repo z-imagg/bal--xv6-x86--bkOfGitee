@@ -44,6 +44,8 @@ eflags状态寄存器     pushfd     pushfl
                     popfd      popfl  
 */
     __asm__  __volatile__ (
+      "nop \n\t"    //空指令标记供人工观测
+      
       "pushal \n\t"  
       "pushfl \n\t"   //备份  
 
