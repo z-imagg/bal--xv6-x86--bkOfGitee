@@ -36,41 +36,6 @@ bootmain(void)
   eph = ph + elf->phnum;
   for(; ph < eph; ph++){
     pa = (uchar*)ph->paddr;
-/**
-语法                 intel      AT&T(即GCC汇编)
-通用寄存器           pusha      pushal
-                    popa       popal  
-eflags状态寄存器     pushfd     pushfl  
-                    popfd      popfl  
-*/
-    __asm__  __volatile__ (
-      "nop \n\t"    //空指令标记供人工观测
-      
-      "pushal \n\t"  
-      "pushfl \n\t"   //备份  
-
-      "push %0 \n\t"   //目标值进栈
-      "pop %%edx \n\t"   //目标值进edx
-      "TESTL 0x7b00, %%ecx \n\t"   //'0x7b00' 读内存断点(gdb rwatch) , 断点触发时打印edx值即目标值. (显然任选一个寄存器都可以，未必非要ecx)
-
-      "popfl  \n\t"   
-      "popal  \n\t"   //恢复
-
-      "nop \n\t"    //空指令标记供人工观测
-      : 
-      : "m"(pa) //gas inline汇编 （即 AT&T inline汇编） 当有变量带入时, %寄存器 改为 %%寄存器
-       );// 
-	  /* gdb单步打印此些指令如下:
-0x7d85  nop
-0x7d86  pusha
-0x7d87  pushf
-0x7d88  pushl  -0x1c(%ebp)
-0x7d8b  pop    %edx
-0x7d8c  test   %ecx,0x7b00
-0x7d92  popf
-0x7d93  popa
-0x7d94  nop
-	  */
     readseg(pa, ph->filesz, ph->off);
     if(ph->memsz > ph->filesz)
       stosb(pa + ph->filesz, 0, ph->memsz - ph->filesz);
