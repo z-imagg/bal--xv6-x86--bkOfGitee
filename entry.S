@@ -57,9 +57,6 @@ entry:
 
   # Set up the stack pointer.
   movl $(stack + KSTACKSIZE), %esp
-  test $stack, %eax
-  test $KSTACKSIZE, %eax
-  test $(stack + KSTACKSIZE), %eax
 
 /**
 语法                 intel      AT&T(即GCC汇编)
