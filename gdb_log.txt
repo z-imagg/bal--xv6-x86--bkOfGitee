@@ -10,8 +10,8 @@ Hardware read watchpoint 1: *(long*)(0x7b00)
 Hardware read watchpoint 2: *(long*)(0x7a00)
 The target architecture is assumed to be i386
 => 0x10003c:	push   $0x1000
-entry.S中常量stack值为:0x8010a5c0
+entry.S中常量stack值为:0x8010a5c0: 此地址是main.c中函数main()的调用栈开始地址.
 => 0x100048:	popf   
-entry.S中常量KSTACKSIZE值为:0x1000
+entry.S中常量KSTACKSIZE值为:0x1000: main.c中函数main()的调用栈的尺寸（字节个数）
 .gdbinit:49: Error in sourced command file:
 Remote connection closed
