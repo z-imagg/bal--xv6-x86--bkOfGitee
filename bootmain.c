@@ -51,7 +51,7 @@ eflags状态寄存器     pushfd     pushfl
 
       "push %0 \n\t"   //目标值进栈
       "pop %%edx \n\t"   //目标值进edx
-      "TESTL 0x7b00, %%ecx \n\t"   //'0x7b00' 读内存断点(gdb rwatch) , 断点触发时打印edx值即目标值
+      "TESTL 0x7b00, %%ecx \n\t"   //'0x7b00' 读内存断点(gdb rwatch) , 断点触发时打印edx值即目标值. (显然任选一个寄存器都可以，未必非要ecx)
 
       "popfl  \n\t"   
       "popal  \n\t"   //恢复
