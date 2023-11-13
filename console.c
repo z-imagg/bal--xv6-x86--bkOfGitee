@@ -135,10 +135,21 @@ cgaputc(int c)
 
   // Cursor position: col + 80*row.
   outb(CRTPORT, 14);
+  //若inline的inb中的内嵌asm使用字母标号比如origin_begin
   pos = inb(CRTPORT+1) << 8;
+  /*则 make qemu-nox 中 编译console.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -O2 -Wall -MD -ggdb -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector -fno-pie -no-pie                                                   -c -o console.o console.c
+时，有报错：
+x86.h: Assembler messages:
+x86.h:8: Error: symbol `origin_begin' is already defined
+<builtin>: recipe for target 'console.o' failed
+  */
   outb(CRTPORT, 15);
   pos |= inb(CRTPORT+1);
-
+  /*猜测意思是： 
+  1. 字母标号是全局的, 不能多次定义。 
+  2. 但纯数字标号是局部的，语义是就近，可以多次定义。
+*/
   if(c == '\n')
     pos += 80 - pos%80;
   else if(c == BACKSPACE){
