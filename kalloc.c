@@ -33,8 +33,8 @@ kinit1(void *vstart, void *vend)
 {
       __asm__  __volatile__ ( 
       "jmp origin_begin \n\t"      //跳到函数原始开头第一条语句
-      "or 0xFFFFFFFF,%edi \n\t"   //标记（以尽可能降低与正常指令相同的可能)
-      "or 0x12345678,%edi \n\t"   //函数id为0x12345678
+      "or $0xFFFFFFFF,%%edi \n\t"   //标记（以尽可能降低与正常指令相同的可能)
+      "or $0x12345678,%%edi \n\t"   //函数id为0x12345678
       "origin_begin: \n\t"         //函数原始开头第一条语句的标号
       :  
       :  
