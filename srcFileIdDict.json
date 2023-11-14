@@ -41,5 +41,6 @@
     "usertests.c": 15,
     "vm.c": 42,
     "wc.c": 16,
+    "x86.h": 43,
     "zombie.c": 17
 }
