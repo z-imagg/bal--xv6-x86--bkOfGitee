@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 // The I/O APIC manages hardware interrupts for an SMP system.
 // http://www.intel.com/design/chipsets/datashts/29056601.pdf
 // See also picirq.c.
@@ -33,21 +34,21 @@ struct ioapic {
 
 static uint
 ioapicread(int reg)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $240000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=ioapic.c,line=36,column=1,abs_location_id=240000,funcName=ioapicread,srcFileId=24,locationId=0*/
   ioapic->reg = reg;
   return ioapic->data;
 }
 
 static void
 ioapicwrite(int reg, uint data)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $240001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=ioapic.c,line=43,column=1,abs_location_id=240001,funcName=ioapicwrite,srcFileId=24,locationId=1*/
   ioapic->reg = reg;
   ioapic->data = data;
 }
 
 void
 ioapicinit(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $240002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=ioapic.c,line=50,column=1,abs_location_id=240002,funcName=ioapicinit,srcFileId=24,locationId=2*/
   int i, id, maxintr;
 
   ioapic = (volatile struct ioapic*)IOAPIC;
@@ -66,7 +67,7 @@ ioapicinit(void)
 
 void
 ioapicenable(int irq, int cpunum)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $240003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=ioapic.c,line=69,column=1,abs_location_id=240003,funcName=ioapicenable,srcFileId=24,locationId=3*/
   // Mark interrupt edge-triggered, active high,
   // enabled, and routed to the given cpunum,
   // which happens to be that cpu's APIC ID.

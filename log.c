@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 #include "types.h"
 #include "defs.h"
 #include "param.h"
@@ -52,7 +53,7 @@ static void commit();
 
 void
 initlog(int dev)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $280002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=log.c,line=55,column=1,abs_location_id=280002,funcName=initlog,srcFileId=28,locationId=2*/
   if (sizeof(struct logheader) >= BSIZE)
     panic("initlog: too big logheader");
 
@@ -68,7 +69,7 @@ initlog(int dev)
 // Copy committed blocks from log to their home location
 static void
 install_trans(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $280003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=log.c,line=71,column=1,abs_location_id=280003,funcName=install_trans,srcFileId=28,locationId=3*/
   int tail;
 
   for (tail = 0; tail < log.lh.n; tail++) {
@@ -84,7 +85,7 @@ install_trans(void)
 // Read the log header from disk into the in-memory log header
 static void
 read_head(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $280004,%%edi \n\t"    "0: \n\t" : : ); /*filePath=log.c,line=87,column=1,abs_location_id=280004,funcName=read_head,srcFileId=28,locationId=4*/
   struct buf *buf = bread(log.dev, log.start);
   struct logheader *lh = (struct logheader *) (buf->data);
   int i;
@@ -100,7 +101,7 @@ read_head(void)
 // current transaction commits.
 static void
 write_head(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $280005,%%edi \n\t"    "0: \n\t" : : ); /*filePath=log.c,line=103,column=1,abs_location_id=280005,funcName=write_head,srcFileId=28,locationId=5*/
   struct buf *buf = bread(log.dev, log.start);
   struct logheader *hb = (struct logheader *) (buf->data);
   int i;
@@ -114,7 +115,7 @@ write_head(void)
 
 static void
 recover_from_log(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $280000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=log.c,line=117,column=1,abs_location_id=280000,funcName=recover_from_log,srcFileId=28,locationId=0*/
   read_head();
   install_trans(); // if committed, copy from log to disk
   log.lh.n = 0;
@@ -124,7 +125,7 @@ recover_from_log(void)
 // called at the start of each FS system call.
 void
 begin_op(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $280006,%%edi \n\t"    "0: \n\t" : : ); /*filePath=log.c,line=127,column=1,abs_location_id=280006,funcName=begin_op,srcFileId=28,locationId=6*/
   acquire(&log.lock);
   while(1){
     if(log.committing){
@@ -144,7 +145,7 @@ begin_op(void)
 // commits if this was the last outstanding operation.
 void
 end_op(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $280007,%%edi \n\t"    "0: \n\t" : : ); /*filePath=log.c,line=147,column=1,abs_location_id=280007,funcName=end_op,srcFileId=28,locationId=7*/
   int do_commit = 0;
 
   acquire(&log.lock);
@@ -176,7 +177,7 @@ end_op(void)
 // Copy modified blocks from cache to log.
 static void
 write_log(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $280008,%%edi \n\t"    "0: \n\t" : : ); /*filePath=log.c,line=179,column=1,abs_location_id=280008,funcName=write_log,srcFileId=28,locationId=8*/
   int tail;
 
   for (tail = 0; tail < log.lh.n; tail++) {
@@ -191,7 +192,7 @@ write_log(void)
 
 static void
 commit()
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $280001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=log.c,line=194,column=1,abs_location_id=280001,funcName=commit,srcFileId=28,locationId=1*/
   if (log.lh.n > 0) {
     write_log();     // Write modified blocks from cache to log
     write_head();    // Write header to disk -- the real commit
@@ -212,7 +213,7 @@ commit()
 //   brelse(bp)
 void
 log_write(struct buf *b)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $280009,%%edi \n\t"    "0: \n\t" : : ); /*filePath=log.c,line=215,column=1,abs_location_id=280009,funcName=log_write,srcFileId=28,locationId=9*/
   int i;
 
   if (log.lh.n >= LOGSIZE || log.lh.n >= log.size - 1)

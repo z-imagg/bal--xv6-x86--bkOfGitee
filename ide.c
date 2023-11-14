@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 // Simple PIO-based (non-DMA) IDE driver code.
 
 #include "types.h"
@@ -37,7 +38,7 @@ static void idestart(struct buf*);
 // Wait for IDE disk to become ready.
 static int
 idewait(int checkerr)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $230001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=ide.c,line=40,column=1,abs_location_id=230001,funcName=idewait,srcFileId=23,locationId=1*/
   int r;
 
   while(((r = inb(0x1f7)) & (IDE_BSY|IDE_DRDY)) != IDE_DRDY)
@@ -49,7 +50,7 @@ idewait(int checkerr)
 
 void
 ideinit(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $230002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=ide.c,line=52,column=1,abs_location_id=230002,funcName=ideinit,srcFileId=23,locationId=2*/
   int i;
 
   initlock(&idelock, "ide");
@@ -72,7 +73,7 @@ ideinit(void)
 // Start the request for b.  Caller must hold idelock.
 static void
 idestart(struct buf *b)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $230000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=ide.c,line=75,column=1,abs_location_id=230000,funcName=idestart,srcFileId=23,locationId=0*/
   if(b == 0)
     panic("idestart");
   if(b->blockno >= FSSIZE)
@@ -102,7 +103,7 @@ idestart(struct buf *b)
 // Interrupt handler.
 void
 ideintr(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $230003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=ide.c,line=105,column=1,abs_location_id=230003,funcName=ideintr,srcFileId=23,locationId=3*/
   struct buf *b;
 
   // First queued buffer is the active request.
@@ -136,7 +137,7 @@ ideintr(void)
 // Else if B_VALID is not set, read buf from disk, set B_VALID.
 void
 iderw(struct buf *b)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $230004,%%edi \n\t"    "0: \n\t" : : ); /*filePath=ide.c,line=139,column=1,abs_location_id=230004,funcName=iderw,srcFileId=23,locationId=4*/
   struct buf **pp;
 
   if(!holdingsleep(&b->lock))

@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 // Simple grep.  Only supports ^ . * $ operators.
 
 #include "types.h"
@@ -9,7 +10,7 @@ int match(char*, char*);
 
 void
 grep(char *pattern, int fd)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $60001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=grep.c,line=12,column=1,abs_location_id=60001,funcName=grep,srcFileId=6,locationId=1*/
   int n, m;
   char *p, *q;
 
@@ -37,7 +38,7 @@ grep(char *pattern, int fd)
 
 int
 main(int argc, char *argv[])
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $60002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=grep.c,line=40,column=1,abs_location_id=60002,funcName=main,srcFileId=6,locationId=2*/
   int fd, i;
   char *pattern;
 
@@ -71,7 +72,7 @@ int matchstar(int, char*, char*);
 
 int
 match(char *re, char *text)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $60000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=grep.c,line=74,column=1,abs_location_id=60000,funcName=match,srcFileId=6,locationId=0*/
   if(re[0] == '^')
     return matchhere(re+1, text);
   do{  // must look at empty string
@@ -83,7 +84,7 @@ match(char *re, char *text)
 
 // matchhere: search for re at beginning of text
 int matchhere(char *re, char *text)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $60003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=grep.c,line=86,column=1,abs_location_id=60003,funcName=matchhere,srcFileId=6,locationId=3*/
   if(re[0] == '\0')
     return 1;
   if(re[1] == '*')
@@ -97,7 +98,7 @@ int matchhere(char *re, char *text)
 
 // matchstar: search for c*re at beginning of text
 int matchstar(int c, char *re, char *text)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $60004,%%edi \n\t"    "0: \n\t" : : ); /*filePath=grep.c,line=100,column=1,abs_location_id=60004,funcName=matchstar,srcFileId=6,locationId=4*/
   do{  // a * matches zero or more instances
     if(matchhere(re, text))
       return 1;
