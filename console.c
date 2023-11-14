@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 // Console input and output.
 // Input is from the keyboard or serial port.
 // Output is written to the screen and serial port.
@@ -26,7 +27,7 @@ static struct {
 
 static void
 printint(int xx, int base, int sign)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $190001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=console.c,line=29,column=1,abs_location_id=190001,funcName=printint,srcFileId=19,locationId=1*/
   static char digits[] = "0123456789abcdef";
   char buf[16];
   int i;
@@ -53,7 +54,7 @@ printint(int xx, int base, int sign)
 // Print to the console. only understands %d, %x, %p, %s.
 void
 cprintf(char *fmt, ...)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $190002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=console.c,line=56,column=1,abs_location_id=190002,funcName=cprintf,srcFileId=19,locationId=2*/
   int i, c, locking;
   uint *argp;
   char *s;
@@ -105,7 +106,7 @@ cprintf(char *fmt, ...)
 
 void
 panic(char *s)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $190003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=console.c,line=108,column=1,abs_location_id=190003,funcName=panic,srcFileId=19,locationId=3*/
   int i;
   uint pcs[10];
 
@@ -130,7 +131,7 @@ static ushort *crt = (ushort*)P2V(0xb8000);  // CGA memory
 
 static void
 cgaputc(int c)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $190004,%%edi \n\t"    "0: \n\t" : : ); /*filePath=console.c,line=133,column=1,abs_location_id=190004,funcName=cgaputc,srcFileId=19,locationId=4*/
   int pos;
 
   // Cursor position: col + 80*row.
@@ -164,7 +165,7 @@ cgaputc(int c)
 
 void
 consputc(int c)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $190000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=console.c,line=167,column=1,abs_location_id=190000,funcName=consputc,srcFileId=19,locationId=0*/
   if(panicked){
     cli();
     for(;;)
@@ -190,7 +191,7 @@ struct {
 
 void
 consoleintr(int (*getc)(void))
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $190005,%%edi \n\t"    "0: \n\t" : : ); /*filePath=console.c,line=193,column=1,abs_location_id=190005,funcName=consoleintr,srcFileId=19,locationId=5*/
   int c, doprocdump = 0;
 
   acquire(&cons.lock);
@@ -234,7 +235,7 @@ consoleintr(int (*getc)(void))
 
 int
 consoleread(struct inode *ip, char *dst, int n)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $190006,%%edi \n\t"    "0: \n\t" : : ); /*filePath=console.c,line=237,column=1,abs_location_id=190006,funcName=consoleread,srcFileId=19,locationId=6*/
   uint target;
   int c;
 
@@ -272,7 +273,7 @@ consoleread(struct inode *ip, char *dst, int n)
 
 int
 consolewrite(struct inode *ip, char *buf, int n)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $190007,%%edi \n\t"    "0: \n\t" : : ); /*filePath=console.c,line=275,column=1,abs_location_id=190007,funcName=consolewrite,srcFileId=19,locationId=7*/
   int i;
 
   iunlock(ip);
@@ -287,7 +288,7 @@ consolewrite(struct inode *ip, char *buf, int n)
 
 void
 consoleinit(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $190008,%%edi \n\t"    "0: \n\t" : : ); /*filePath=console.c,line=290,column=1,abs_location_id=190008,funcName=consoleinit,srcFileId=19,locationId=8*/
   initlock(&cons.lock, "console");
 
   devsw[CONSOLE].write = consolewrite;

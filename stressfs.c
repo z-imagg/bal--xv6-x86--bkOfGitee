@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 // Demonstrate that moving the "acquire" in iderw after the loop that
 // appends to the idequeue results in a race.
 
@@ -15,7 +16,7 @@
 
 int
 main(int argc, char *argv[])
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $140000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=stressfs.c,line=18,column=1,abs_location_id=140000,funcName=main,srcFileId=14,locationId=0*/
   int fd, i;
   char path[] = "stressfs0";
   char data[512];

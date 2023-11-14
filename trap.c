@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 #include "types.h"
 #include "defs.h"
 #include "param.h"
@@ -16,7 +17,7 @@ uint ticks;
 
 void
 tvinit(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $400000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=trap.c,line=19,column=1,abs_location_id=400000,funcName=tvinit,srcFileId=40,locationId=0*/
   int i;
 
   for(i = 0; i < 256; i++)
@@ -28,14 +29,14 @@ tvinit(void)
 
 void
 idtinit(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $400001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=trap.c,line=31,column=1,abs_location_id=400001,funcName=idtinit,srcFileId=40,locationId=1*/
   lidt(idt, sizeof(idt));
 }
 
 //PAGEBREAK: 41
 void
 trap(struct trapframe *tf)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $400002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=trap.c,line=38,column=1,abs_location_id=400002,funcName=trap,srcFileId=40,locationId=2*/
   if(tf->trapno == T_SYSCALL){
     if(myproc()->killed)
       exit();

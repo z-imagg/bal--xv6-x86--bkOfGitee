@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 #include "types.h"
 #include "stat.h"
 #include "user.h"
@@ -23,7 +24,7 @@ static Header *freep;
 
 void
 free(void *ap)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $20000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=umalloc.c,line=26,column=1,abs_location_id=20000,funcName=free,srcFileId=2,locationId=0*/
   Header *bp, *p;
 
   bp = (Header*)ap - 1;
@@ -45,7 +46,7 @@ free(void *ap)
 
 static Header*
 morecore(uint nu)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $20001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=umalloc.c,line=48,column=1,abs_location_id=20001,funcName=morecore,srcFileId=2,locationId=1*/
   char *p;
   Header *hp;
 
@@ -62,7 +63,7 @@ morecore(uint nu)
 
 void*
 malloc(uint nbytes)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $20002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=umalloc.c,line=65,column=1,abs_location_id=20002,funcName=malloc,srcFileId=2,locationId=2*/
   Header *p, *prevp;
   uint nunits;
 

@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 #include "param.h"
 #include "types.h"
 #include "stat.h"
@@ -16,7 +17,7 @@ int stdout = 1;
 // does chdir() call iput(p->cwd) in a transaction?
 void
 iputtest(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=19,column=1,abs_location_id=150000,funcName=iputtest,srcFileId=15,locationId=0*/
   printf(stdout, "iput test\n");
 
   if(mkdir("iputdir") < 0){
@@ -41,7 +42,7 @@ iputtest(void)
 // does exit() call iput(p->cwd) in a transaction?
 void
 exitiputtest(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=44,column=1,abs_location_id=150001,funcName=exitiputtest,srcFileId=15,locationId=1*/
   int pid;
 
   printf(stdout, "exitiput test\n");
@@ -83,7 +84,7 @@ exitiputtest(void)
 //    }
 void
 openiputtest(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=86,column=1,abs_location_id=150002,funcName=openiputtest,srcFileId=15,locationId=2*/
   int pid;
 
   printf(stdout, "openiput test\n");
@@ -117,7 +118,7 @@ openiputtest(void)
 
 void
 opentest(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=120,column=1,abs_location_id=150003,funcName=opentest,srcFileId=15,locationId=3*/
   int fd;
 
   printf(stdout, "open test\n");
@@ -137,7 +138,7 @@ opentest(void)
 
 void
 writetest(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150004,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=140,column=1,abs_location_id=150004,funcName=writetest,srcFileId=15,locationId=4*/
   int fd;
   int i;
 
@@ -186,7 +187,7 @@ writetest(void)
 
 void
 writetest1(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150005,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=189,column=1,abs_location_id=150005,funcName=writetest1,srcFileId=15,locationId=5*/
   int i, fd, n;
 
   printf(stdout, "big files test\n");
@@ -243,7 +244,7 @@ writetest1(void)
 
 void
 createtest(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150006,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=246,column=1,abs_location_id=150006,funcName=createtest,srcFileId=15,locationId=6*/
   int i, fd;
 
   printf(stdout, "many creates, followed by unlink test\n");
@@ -265,7 +266,7 @@ createtest(void)
 }
 
 void dirtest(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150007,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=268,column=1,abs_location_id=150007,funcName=dirtest,srcFileId=15,locationId=7*/
   printf(stdout, "mkdir test\n");
 
   if(mkdir("dir0") < 0){
@@ -292,7 +293,7 @@ void dirtest(void)
 
 void
 exectest(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150008,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=295,column=1,abs_location_id=150008,funcName=exectest,srcFileId=15,locationId=8*/
   printf(stdout, "exec test\n");
   if(exec("echo", echoargv) < 0){
     printf(stdout, "exec echo failed\n");
@@ -304,7 +305,7 @@ exectest(void)
 
 void
 pipe1(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150009,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=307,column=1,abs_location_id=150009,funcName=pipe1,srcFileId=15,locationId=9*/
   int fds[2], pid;
   int seq, i, n, cc, total;
 
@@ -357,7 +358,7 @@ pipe1(void)
 // meant to be run w/ at most two CPUs
 void
 preempt(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150010,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=360,column=1,abs_location_id=150010,funcName=preempt,srcFileId=15,locationId=10*/
   int pid1, pid2, pid3;
   int pfds[2];
 
@@ -403,7 +404,7 @@ preempt(void)
 // try to find any races between exit and wait
 void
 exitwait(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150011,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=406,column=1,abs_location_id=150011,funcName=exitwait,srcFileId=15,locationId=11*/
   int i, pid;
 
   for(i = 0; i < 100; i++){
@@ -426,7 +427,7 @@ exitwait(void)
 
 void
 mem(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150012,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=429,column=1,abs_location_id=150012,funcName=mem,srcFileId=15,locationId=12*/
   void *m1, *m2;
   int pid, ppid;
 
@@ -463,7 +464,7 @@ mem(void)
 // is the offset shared? does inode locking work?
 void
 sharedfd(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150013,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=466,column=1,abs_location_id=150013,funcName=sharedfd,srcFileId=15,locationId=13*/
   int fd, pid, i, n, nc, np;
   char buf[10];
 
@@ -516,7 +517,7 @@ sharedfd(void)
 // time, to test block allocation.
 void
 fourfiles(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150014,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=519,column=1,abs_location_id=150014,funcName=fourfiles,srcFileId=15,locationId=14*/
   int fd, pid, i, j, n, total, pi;
   char *names[] = { "f0", "f1", "f2", "f3" };
   char *fname;
@@ -582,7 +583,7 @@ fourfiles(void)
 // four processes create and delete different files in same directory
 void
 createdelete(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150015,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=585,column=1,abs_location_id=150015,funcName=createdelete,srcFileId=15,locationId=15*/
   enum { N = 20 };
   int pid, i, fd, pi;
   char name[32];
@@ -655,7 +656,7 @@ createdelete(void)
 // can I unlink a file and still read it?
 void
 unlinkread(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150016,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=658,column=1,abs_location_id=150016,funcName=unlinkread,srcFileId=15,locationId=16*/
   int fd, fd1;
 
   printf(1, "unlinkread test\n");
@@ -700,7 +701,7 @@ unlinkread(void)
 
 void
 linktest(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150017,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=703,column=1,abs_location_id=150017,funcName=linktest,srcFileId=15,locationId=17*/
   int fd;
 
   printf(1, "linktest\n");
@@ -763,7 +764,7 @@ linktest(void)
 // test concurrent create/link/unlink of the same file
 void
 concreate(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150018,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=766,column=1,abs_location_id=150018,funcName=concreate,srcFileId=15,locationId=18*/
   char file[3];
   int i, pid, n, fd;
   char fa[40];
@@ -856,7 +857,7 @@ concreate(void)
 // to look for deadlocks.
 void
 linkunlink()
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150019,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=859,column=1,abs_location_id=150019,funcName=linkunlink,srcFileId=15,locationId=19*/
   int pid, i;
 
   printf(1, "linkunlink test\n");
@@ -891,7 +892,7 @@ linkunlink()
 // directory that uses indirect blocks
 void
 bigdir(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150020,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=894,column=1,abs_location_id=150020,funcName=bigdir,srcFileId=15,locationId=20*/
   int i, fd;
   char name[10];
 
@@ -933,7 +934,7 @@ bigdir(void)
 
 void
 subdir(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150021,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=936,column=1,abs_location_id=150021,funcName=subdir,srcFileId=15,locationId=21*/
   int fd, cc;
 
   printf(1, "subdir test\n");
@@ -1117,7 +1118,7 @@ subdir(void)
 // test writes that are larger than the log.
 void
 bigwrite(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150022,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1120,column=1,abs_location_id=150022,funcName=bigwrite,srcFileId=15,locationId=22*/
   int fd, sz;
 
   printf(1, "bigwrite test\n");
@@ -1146,7 +1147,7 @@ bigwrite(void)
 
 void
 bigfile(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150023,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1149,column=1,abs_location_id=150023,funcName=bigfile,srcFileId=15,locationId=23*/
   int fd, i, total, cc;
 
   printf(1, "bigfile test\n");
@@ -1202,7 +1203,7 @@ bigfile(void)
 
 void
 fourteen(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150024,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1205,column=1,abs_location_id=150024,funcName=fourteen,srcFileId=15,locationId=24*/
   int fd;
 
   // DIRSIZ is 14.
@@ -1243,7 +1244,7 @@ fourteen(void)
 
 void
 rmdot(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150025,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1246,column=1,abs_location_id=150025,funcName=rmdot,srcFileId=15,locationId=25*/
   printf(1, "rmdot test\n");
   if(mkdir("dots") != 0){
     printf(1, "mkdir dots failed\n");
@@ -1282,7 +1283,7 @@ rmdot(void)
 
 void
 dirfile(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150026,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1285,column=1,abs_location_id=150026,funcName=dirfile,srcFileId=15,locationId=26*/
   int fd;
 
   printf(1, "dir vs file\n");
@@ -1342,7 +1343,7 @@ dirfile(void)
 // test that iput() is called at the end of _namei()
 void
 iref(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150027,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1345,column=1,abs_location_id=150027,funcName=iref,srcFileId=15,locationId=27*/
   int i, fd;
 
   printf(1, "empty file name\n");
@@ -1378,7 +1379,7 @@ iref(void)
 // inside the bigger usertests binary, we run out of memory first.
 void
 forktest(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150028,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1381,column=1,abs_location_id=150028,funcName=forktest,srcFileId=15,locationId=28*/
   int n, pid;
 
   printf(1, "fork test\n");
@@ -1413,7 +1414,7 @@ forktest(void)
 
 void
 sbrktest(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150029,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1416,column=1,abs_location_id=150029,funcName=sbrktest,srcFileId=15,locationId=29*/
   int fds[2], pid, pids[10], ppid;
   char *a, *b, *c, *lastaddr, *oldbrk, *p, scratch;
   uint amt;
@@ -1548,7 +1549,7 @@ sbrktest(void)
 
 void
 validateint(int *p)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150030,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1551,column=1,abs_location_id=150030,funcName=validateint,srcFileId=15,locationId=30*/
   int res;
   asm("mov %%esp, %%ebx\n\t"
       "mov %3, %%esp\n\t"
@@ -1561,7 +1562,7 @@ validateint(int *p)
 
 void
 validatetest(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150031,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1564,column=1,abs_location_id=150031,funcName=validatetest,srcFileId=15,locationId=31*/
   int hi, pid;
   uint p;
 
@@ -1593,7 +1594,7 @@ validatetest(void)
 char uninit[10000];
 void
 bsstest(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150032,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1596,column=1,abs_location_id=150032,funcName=bsstest,srcFileId=15,locationId=32*/
   int i;
 
   printf(stdout, "bss test\n");
@@ -1611,7 +1612,7 @@ bsstest(void)
 // below the stack and wreck the instructions/data?
 void
 bigargtest(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150033,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1614,column=1,abs_location_id=150033,funcName=bigargtest,srcFileId=15,locationId=33*/
   int pid, fd;
 
   unlink("bigarg-ok");
@@ -1646,7 +1647,7 @@ bigargtest(void)
 // answer: balloc panics, so this test is not useful.
 void
 fsfull()
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150034,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1649,column=1,abs_location_id=150034,funcName=fsfull,srcFileId=15,locationId=34*/
   int nfiles;
   int fsblocks = 0;
 
@@ -1697,7 +1698,7 @@ fsfull()
 
 void
 uio()
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150035,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1700,column=1,abs_location_id=150035,funcName=uio,srcFileId=15,locationId=35*/
   #define RTC_ADDR 0x70
   #define RTC_DATA 0x71
 
@@ -1725,7 +1726,7 @@ uio()
 }
 
 void argptest()
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150036,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1728,column=1,abs_location_id=150036,funcName=argptest,srcFileId=15,locationId=36*/
   int fd;
   fd = open("init", O_RDONLY);
   if (fd < 0) {
@@ -1740,14 +1741,14 @@ void argptest()
 unsigned long randstate = 1;
 unsigned int
 rand()
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150037,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1743,column=1,abs_location_id=150037,funcName=rand,srcFileId=15,locationId=37*/
   randstate = randstate * 1664525 + 1013904223;
   return randstate;
 }
 
 int
 main(int argc, char *argv[])
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $150038,%%edi \n\t"    "0: \n\t" : : ); /*filePath=usertests.c,line=1750,column=1,abs_location_id=150038,funcName=main,srcFileId=15,locationId=38*/
   printf(1, "usertests starting\n");
 
   if(open("usertests.ran", 0) >= 0){
