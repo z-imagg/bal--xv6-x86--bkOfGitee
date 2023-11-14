@@ -155,3 +155,9 @@ gdb
 # 学习
 > 调用流程01：bootasm.S-->bootmain.c-->entry.S-->main.c 
 > ![调用流程01：bootasm.S-->bootmain.c-->entry.S-->main.c](https://gitcode.net/crk/xv6-x86/-/raw/main/study/call_flow_01.png)
+
+
+# addFuncIdByClangPlugin
+```shell
+make clean;  make addFuncIdByClangPlugin; make x86.o
+```
