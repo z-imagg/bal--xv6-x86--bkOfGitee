@@ -54,9 +54,9 @@ void panic(char*);
 struct cmd *parsecmd(char*);
 
 // Execute cmd.  Never returns.
-void
+ __attribute__((noreturn)) void
 runcmd(struct cmd *cmd)
-{
+{//子进程执行
   int p[2];
   struct backcmd *bcmd;
   struct execcmd *ecmd;
@@ -75,7 +75,7 @@ runcmd(struct cmd *cmd)
     ecmd = (struct execcmd*)cmd;
     if(ecmd->argv[0] == 0)
       exit();
-    exec(ecmd->argv[0], ecmd->argv);
+    exec(ecmd->argv[0], ecmd->argv);//exec: 子进程内容被替换为指定ELF文件 并执行该ELF， 即子进程不会返回到这里。
     printf(2, "exec %s failed\n", ecmd->argv[0]);
     break;
 
@@ -156,7 +156,7 @@ main(void)
   }
 
   // Read and run input commands.
-  while(getcmd(buf, sizeof(buf)) >= 0){
+  while(getcmd(buf, sizeof(buf)) >= 0){//循环: 读取用户输入、解析用户输入为命令、执行该命令
     if(buf[0] == 'c' && buf[1] == 'd' && buf[2] == ' '){
       // Chdir must be called by the parent, not the child.
       buf[strlen(buf)-1] = 0;  // chop \n
@@ -165,10 +165,10 @@ main(void)
       continue;
     }
     if(fork1() == 0)
-      runcmd(parsecmd(buf));
-    wait();
-  }
-  exit();
+      runcmd(parsecmd(buf));//子进程执行本行 , runcmd中调用exec替换子进程内容为指定ELF文件并执行该ELF 即 子进程不会返回到这。
+    wait();//父进程执行本行: 等待一个子进程退出
+  }//循环结束
+  exit();//父进程退出
 }
 
 void

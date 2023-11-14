@@ -58,6 +58,39 @@ entry:
   # Set up the stack pointer.
   movl $(stack + KSTACKSIZE), %esp
 
+/**
+语法                 intel      AT&T(即GCC汇编)
+通用寄存器           pusha      pushal
+                    popa       popal  
+eflags状态寄存器     pushfd     pushfl  
+                    popfd      popfl  
+*/
+
+  nop  #空指令标记供人工观测
+  pushal
+  pushfl  #保存现场
+
+  #开始处理
+  pushl $stack #目标值进栈
+  popl %edx    #目标值进edx
+  TESTL 0x7b00, %ecx  #'0x7b00' 读内存断点(gdb rwatch) , 断点触发时打印edx值即目标值. (显然任选一个寄存器都可以，未必非要ecx)
+
+  pushl $KSTACKSIZE #目标值进栈
+  popl %edx    #目标值进edx
+  TESTL 0x7a00, %ecx  #'0x7a00' 读内存断点(gdb rwatch) , 断点触发时打印edx值即目标值. (显然任选一个寄存器都可以，未必非要ecx)
+
+
+  #结束处理
+
+
+  popfl
+  popal  #恢复现场
+  nop  #空指令标记供人工观测
+
+
+  # gdb单步打印此些指令如下:
+
+	  
   # Jump to main(), and switch to executing at
   # high addresses. The indirect call is needed because
   # the assembler produces a PC-relative instruction
@@ -65,4 +98,4 @@ entry:
   mov $main, %eax
   jmp *%eax
 
-.comm stack, KSTACKSIZE
+.comm stack, KSTACKSIZE #分配一片未初始化内存区域。 具体 为,   分配 其从当前位置开始KSTACKSIZE（0x1000 即4096 即4k）个字节 的内存区域 给符号stack，即stack值为这片内存区域的首字节地址 。   这片内存区域 作为 即将跳入的 main.c中的C语言函数main()的调用栈。
