@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 #include "types.h"
 #include "defs.h"
 #include "param.h"
@@ -16,7 +17,7 @@ extern char end[]; // first address after kernel loaded from ELF file
 // doing some setup required for memory allocator to work.
 int
 main(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $290002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=main.c,line=19,column=1,abs_location_id=290002,funcName=main,srcFileId=29,locationId=2*/
   kinit1(end, P2V(4*1024*1024)); // phys page allocator
   kvmalloc();      // kernel page table
   mpinit();        // detect other processors
@@ -40,7 +41,7 @@ main(void)
 // Other CPUs jump here from entryother.S.
 static void
 mpenter(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $290003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=main.c,line=43,column=1,abs_location_id=290003,funcName=mpenter,srcFileId=29,locationId=3*/
   switchkvm();
   seginit();
   lapicinit();
@@ -50,7 +51,7 @@ mpenter(void)
 // Common CPU setup code.
 static void
 mpmain(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $290001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=main.c,line=53,column=1,abs_location_id=290001,funcName=mpmain,srcFileId=29,locationId=1*/
   cprintf("cpu%d: starting %d\n", cpuid(), cpuid());
   idtinit();       // load idt register
   xchg(&(mycpu()->started), 1); // tell startothers() we're up
@@ -62,7 +63,7 @@ pde_t entrypgdir[];  // For entry.S
 // Start the non-boot (AP) processors.
 static void
 startothers(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $290000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=main.c,line=65,column=1,abs_location_id=290000,funcName=startothers,srcFileId=29,locationId=0*/
   extern uchar _binary_entryother_start[], _binary_entryother_size[];
   uchar *code;
   struct cpu *c;

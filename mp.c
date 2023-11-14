@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 // Multiprocessor support
 // Search memory for MP description structures.
 // http://developer.intel.com/design/pentium/datashts/24201606.pdf
@@ -17,7 +18,7 @@ uchar ioapicid;
 
 static uchar
 sum(uchar *addr, int len)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $300000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=mp.c,line=20,column=1,abs_location_id=300000,funcName=sum,srcFileId=30,locationId=0*/
   int i, sum;
 
   sum = 0;
@@ -29,7 +30,7 @@ sum(uchar *addr, int len)
 // Look for an MP structure in the len bytes at addr.
 static struct mp*
 mpsearch1(uint a, int len)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $300001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=mp.c,line=32,column=1,abs_location_id=300001,funcName=mpsearch1,srcFileId=30,locationId=1*/
   uchar *e, *p, *addr;
 
   addr = P2V(a);
@@ -47,7 +48,7 @@ mpsearch1(uint a, int len)
 // 3) in the BIOS ROM between 0xE0000 and 0xFFFFF.
 static struct mp*
 mpsearch(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $300002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=mp.c,line=50,column=1,abs_location_id=300002,funcName=mpsearch,srcFileId=30,locationId=2*/
   uchar *bda;
   uint p;
   struct mp *mp;
@@ -71,7 +72,7 @@ mpsearch(void)
 // To do: check extended table checksum.
 static struct mpconf*
 mpconfig(struct mp **pmp)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $300003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=mp.c,line=74,column=1,abs_location_id=300003,funcName=mpconfig,srcFileId=30,locationId=3*/
   struct mpconf *conf;
   struct mp *mp;
 
@@ -90,7 +91,7 @@ mpconfig(struct mp **pmp)
 
 void
 mpinit(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $300004,%%edi \n\t"    "0: \n\t" : : ); /*filePath=mp.c,line=93,column=1,abs_location_id=300004,funcName=mpinit,srcFileId=30,locationId=4*/
   uchar *p, *e;
   int ismp;
   struct mp *mp;

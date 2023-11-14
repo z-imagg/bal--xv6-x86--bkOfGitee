@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 // Intel 8250 serial port (UART).
 
 #include "types.h"
@@ -18,7 +19,7 @@ static int uart;    // is there a uart?
 
 void
 uartinit(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $410000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=uart.c,line=21,column=1,abs_location_id=410000,funcName=uartinit,srcFileId=41,locationId=0*/
   char *p;
 
   // Turn off the FIFO
@@ -50,7 +51,7 @@ uartinit(void)
 
 void
 uartputc(int c)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $410001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=uart.c,line=53,column=1,abs_location_id=410001,funcName=uartputc,srcFileId=41,locationId=1*/
   int i;
 
   if(!uart)
@@ -62,7 +63,7 @@ uartputc(int c)
 
 static int
 uartgetc(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $410002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=uart.c,line=65,column=1,abs_location_id=410002,funcName=uartgetc,srcFileId=41,locationId=2*/
   if(!uart)
     return -1;
   if(!(inb(COM1+5) & 0x01))
@@ -72,6 +73,6 @@ uartgetc(void)
 
 void
 uartintr(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $410003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=uart.c,line=75,column=1,abs_location_id=410003,funcName=uartintr,srcFileId=41,locationId=3*/
   consoleintr(uartgetc);
 }

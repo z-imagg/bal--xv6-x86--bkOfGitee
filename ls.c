@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 #include "types.h"
 #include "stat.h"
 #include "user.h"
@@ -5,7 +6,7 @@
 
 char*
 fmtname(char *path)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $100000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=ls.c,line=8,column=1,abs_location_id=100000,funcName=fmtname,srcFileId=10,locationId=0*/
   static char buf[DIRSIZ+1];
   char *p;
 
@@ -24,7 +25,7 @@ fmtname(char *path)
 
 void
 ls(char *path)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $100001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=ls.c,line=27,column=1,abs_location_id=100001,funcName=ls,srcFileId=10,locationId=1*/
   char buf[512], *p;
   int fd;
   struct dirent de;
@@ -72,7 +73,7 @@ ls(char *path)
 
 int
 main(int argc, char *argv[])
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $100002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=ls.c,line=75,column=1,abs_location_id=100002,funcName=main,srcFileId=10,locationId=2*/
   int i;
 
   if(argc < 2){

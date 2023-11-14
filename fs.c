@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 // File system implementation.  Five layers:
 //   + Blocks: allocator for raw disk blocks.
 //   + Log: crash recovery for multi-step updates.
@@ -30,7 +31,7 @@ struct superblock sb;
 // Read the super block.
 void
 readsb(int dev, struct superblock *sb)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=33,column=1,abs_location_id=220001,funcName=readsb,srcFileId=22,locationId=1*/
   struct buf *bp;
 
   bp = bread(dev, 1);
@@ -41,7 +42,7 @@ readsb(int dev, struct superblock *sb)
 // Zero a block.
 static void
 bzero(int dev, int bno)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=44,column=1,abs_location_id=220002,funcName=bzero,srcFileId=22,locationId=2*/
   struct buf *bp;
 
   bp = bread(dev, bno);
@@ -55,7 +56,7 @@ bzero(int dev, int bno)
 // Allocate a zeroed disk block.
 static uint
 balloc(uint dev)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=58,column=1,abs_location_id=220003,funcName=balloc,srcFileId=22,locationId=3*/
   int b, bi, m;
   struct buf *bp;
 
@@ -80,7 +81,7 @@ balloc(uint dev)
 // Free a disk block.
 static void
 bfree(int dev, uint b)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220004,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=83,column=1,abs_location_id=220004,funcName=bfree,srcFileId=22,locationId=4*/
   struct buf *bp;
   int bi, m;
 
@@ -170,7 +171,7 @@ struct {
 
 void
 iinit(int dev)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220005,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=173,column=1,abs_location_id=220005,funcName=iinit,srcFileId=22,locationId=5*/
   int i = 0;
   
   initlock(&icache.lock, "icache");
@@ -193,7 +194,7 @@ static struct inode* iget(uint dev, uint inum);
 // Returns an unlocked but allocated and referenced inode.
 struct inode*
 ialloc(uint dev, short type)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220007,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=196,column=1,abs_location_id=220007,funcName=ialloc,srcFileId=22,locationId=7*/
   int inum;
   struct buf *bp;
   struct dinode *dip;
@@ -219,7 +220,7 @@ ialloc(uint dev, short type)
 // Caller must hold ip->lock.
 void
 iupdate(struct inode *ip)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220008,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=222,column=1,abs_location_id=220008,funcName=iupdate,srcFileId=22,locationId=8*/
   struct buf *bp;
   struct dinode *dip;
 
@@ -240,7 +241,7 @@ iupdate(struct inode *ip)
 // the inode and does not read it from disk.
 static struct inode*
 iget(uint dev, uint inum)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220006,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=243,column=1,abs_location_id=220006,funcName=iget,srcFileId=22,locationId=6*/
   struct inode *ip, *empty;
 
   acquire(&icache.lock);
@@ -275,7 +276,7 @@ iget(uint dev, uint inum)
 // Returns ip to enable ip = idup(ip1) idiom.
 struct inode*
 idup(struct inode *ip)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220009,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=278,column=1,abs_location_id=220009,funcName=idup,srcFileId=22,locationId=9*/
   acquire(&icache.lock);
   ip->ref++;
   release(&icache.lock);
@@ -286,7 +287,7 @@ idup(struct inode *ip)
 // Reads the inode from disk if necessary.
 void
 ilock(struct inode *ip)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220010,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=289,column=1,abs_location_id=220010,funcName=ilock,srcFileId=22,locationId=10*/
   struct buf *bp;
   struct dinode *dip;
 
@@ -314,7 +315,7 @@ ilock(struct inode *ip)
 // Unlock the given inode.
 void
 iunlock(struct inode *ip)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220011,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=317,column=1,abs_location_id=220011,funcName=iunlock,srcFileId=22,locationId=11*/
   if(ip == 0 || !holdingsleep(&ip->lock) || ip->ref < 1)
     panic("iunlock");
 
@@ -330,7 +331,7 @@ iunlock(struct inode *ip)
 // case it has to free the inode.
 void
 iput(struct inode *ip)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220012,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=333,column=1,abs_location_id=220012,funcName=iput,srcFileId=22,locationId=12*/
   acquiresleep(&ip->lock);
   if(ip->valid && ip->nlink == 0){
     acquire(&icache.lock);
@@ -354,7 +355,7 @@ iput(struct inode *ip)
 // Common idiom: unlock, then put.
 void
 iunlockput(struct inode *ip)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220013,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=357,column=1,abs_location_id=220013,funcName=iunlockput,srcFileId=22,locationId=13*/
   iunlock(ip);
   iput(ip);
 }
@@ -371,7 +372,7 @@ iunlockput(struct inode *ip)
 // If there is no such block, bmap allocates one.
 static uint
 bmap(struct inode *ip, uint bn)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220014,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=374,column=1,abs_location_id=220014,funcName=bmap,srcFileId=22,locationId=14*/
   uint addr, *a;
   struct buf *bp;
 
@@ -406,7 +407,7 @@ bmap(struct inode *ip, uint bn)
 // not an open file or current directory).
 static void
 itrunc(struct inode *ip)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=409,column=1,abs_location_id=220000,funcName=itrunc,srcFileId=22,locationId=0*/
   int i, j;
   struct buf *bp;
   uint *a;
@@ -438,7 +439,7 @@ itrunc(struct inode *ip)
 // Caller must hold ip->lock.
 void
 stati(struct inode *ip, struct stat *st)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220015,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=441,column=1,abs_location_id=220015,funcName=stati,srcFileId=22,locationId=15*/
   st->dev = ip->dev;
   st->ino = ip->inum;
   st->type = ip->type;
@@ -451,7 +452,7 @@ stati(struct inode *ip, struct stat *st)
 // Caller must hold ip->lock.
 int
 readi(struct inode *ip, char *dst, uint off, uint n)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220016,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=454,column=1,abs_location_id=220016,funcName=readi,srcFileId=22,locationId=16*/
   uint tot, m;
   struct buf *bp;
 
@@ -480,7 +481,7 @@ readi(struct inode *ip, char *dst, uint off, uint n)
 // Caller must hold ip->lock.
 int
 writei(struct inode *ip, char *src, uint off, uint n)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220017,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=483,column=1,abs_location_id=220017,funcName=writei,srcFileId=22,locationId=17*/
   uint tot, m;
   struct buf *bp;
 
@@ -515,7 +516,7 @@ writei(struct inode *ip, char *src, uint off, uint n)
 
 int
 namecmp(const char *s, const char *t)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220018,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=518,column=1,abs_location_id=220018,funcName=namecmp,srcFileId=22,locationId=18*/
   return strncmp(s, t, DIRSIZ);
 }
 
@@ -523,7 +524,7 @@ namecmp(const char *s, const char *t)
 // If found, set *poff to byte offset of entry.
 struct inode*
 dirlookup(struct inode *dp, char *name, uint *poff)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220019,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=526,column=1,abs_location_id=220019,funcName=dirlookup,srcFileId=22,locationId=19*/
   uint off, inum;
   struct dirent de;
 
@@ -550,7 +551,7 @@ dirlookup(struct inode *dp, char *name, uint *poff)
 // Write a new directory entry (name, inum) into the directory dp.
 int
 dirlink(struct inode *dp, char *name, uint inum)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220020,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=553,column=1,abs_location_id=220020,funcName=dirlink,srcFileId=22,locationId=20*/
   int off;
   struct dirent de;
   struct inode *ip;
@@ -594,7 +595,7 @@ dirlink(struct inode *dp, char *name, uint inum)
 //
 static char*
 skipelem(char *path, char *name)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220021,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=597,column=1,abs_location_id=220021,funcName=skipelem,srcFileId=22,locationId=21*/
   char *s;
   int len;
 
@@ -623,7 +624,7 @@ skipelem(char *path, char *name)
 // Must be called inside a transaction since it calls iput().
 static struct inode*
 namex(char *path, int nameiparent, char *name)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220022,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=626,column=1,abs_location_id=220022,funcName=namex,srcFileId=22,locationId=22*/
   struct inode *ip, *next;
 
   if(*path == '/')
@@ -658,13 +659,13 @@ namex(char *path, int nameiparent, char *name)
 
 struct inode*
 namei(char *path)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220023,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=661,column=1,abs_location_id=220023,funcName=namei,srcFileId=22,locationId=23*/
   char name[DIRSIZ];
   return namex(path, 0, name);
 }
 
 struct inode*
 nameiparent(char *path, char *name)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $220024,%%edi \n\t"    "0: \n\t" : : ); /*filePath=fs.c,line=668,column=1,abs_location_id=220024,funcName=nameiparent,srcFileId=22,locationId=24*/
   return namex(path, 1, name);
 }

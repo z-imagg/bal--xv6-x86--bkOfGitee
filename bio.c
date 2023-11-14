@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 // Buffer cache.
 //
 // The buffer cache is a linked list of buf structures holding
@@ -37,7 +38,7 @@ struct {
 
 void
 binit(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $180000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=bio.c,line=40,column=1,abs_location_id=180000,funcName=binit,srcFileId=18,locationId=0*/
   struct buf *b;
 
   initlock(&bcache.lock, "bcache");
@@ -60,7 +61,7 @@ binit(void)
 // In either case, return locked buffer.
 static struct buf*
 bget(uint dev, uint blockno)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $180001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=bio.c,line=63,column=1,abs_location_id=180001,funcName=bget,srcFileId=18,locationId=1*/
   struct buf *b;
 
   acquire(&bcache.lock);
@@ -95,7 +96,7 @@ bget(uint dev, uint blockno)
 // Return a locked buf with the contents of the indicated block.
 struct buf*
 bread(uint dev, uint blockno)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $180002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=bio.c,line=98,column=1,abs_location_id=180002,funcName=bread,srcFileId=18,locationId=2*/
   struct buf *b;
 
   b = bget(dev, blockno);
@@ -108,7 +109,7 @@ bread(uint dev, uint blockno)
 // Write b's contents to disk.  Must be locked.
 void
 bwrite(struct buf *b)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $180003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=bio.c,line=111,column=1,abs_location_id=180003,funcName=bwrite,srcFileId=18,locationId=3*/
   if(!holdingsleep(&b->lock))
     panic("bwrite");
   b->flags |= B_DIRTY;
@@ -119,7 +120,7 @@ bwrite(struct buf *b)
 // Move to the head of the MRU list.
 void
 brelse(struct buf *b)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $180004,%%edi \n\t"    "0: \n\t" : : ); /*filePath=bio.c,line=122,column=1,abs_location_id=180004,funcName=brelse,srcFileId=18,locationId=4*/
   if(!holdingsleep(&b->lock))
     panic("brelse");
 

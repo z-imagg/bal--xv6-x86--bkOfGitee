@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 #include "types.h"
 #include "defs.h"
 #include "param.h"
@@ -16,7 +17,7 @@
 // Fetch the int at addr from the current process.
 int
 fetchint(uint addr, int *ip)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $370000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=syscall.c,line=19,column=1,abs_location_id=370000,funcName=fetchint,srcFileId=37,locationId=0*/
   struct proc *curproc = myproc();
 
   if(addr >= curproc->sz || addr+4 > curproc->sz)
@@ -30,7 +31,7 @@ fetchint(uint addr, int *ip)
 // Returns length of string, not including nul.
 int
 fetchstr(uint addr, char **pp)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $370001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=syscall.c,line=33,column=1,abs_location_id=370001,funcName=fetchstr,srcFileId=37,locationId=1*/
   char *s, *ep;
   struct proc *curproc = myproc();
 
@@ -48,7 +49,7 @@ fetchstr(uint addr, char **pp)
 // Fetch the nth 32-bit system call argument.
 int
 argint(int n, int *ip)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $370002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=syscall.c,line=51,column=1,abs_location_id=370002,funcName=argint,srcFileId=37,locationId=2*/
   return fetchint((myproc()->tf->esp) + 4 + 4*n, ip);
 }
 
@@ -57,7 +58,7 @@ argint(int n, int *ip)
 // lies within the process address space.
 int
 argptr(int n, char **pp, int size)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $370003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=syscall.c,line=60,column=1,abs_location_id=370003,funcName=argptr,srcFileId=37,locationId=3*/
   int i;
   struct proc *curproc = myproc();
  
@@ -75,7 +76,7 @@ argptr(int n, char **pp, int size)
 // between this check and being used by the kernel.)
 int
 argstr(int n, char **pp)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $370004,%%edi \n\t"    "0: \n\t" : : ); /*filePath=syscall.c,line=78,column=1,abs_location_id=370004,funcName=argstr,srcFileId=37,locationId=4*/
   int addr;
   if(argint(n, &addr) < 0)
     return -1;
@@ -130,7 +131,7 @@ static int (*syscalls[])(void) = {
 
 void
 syscall(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $370005,%%edi \n\t"    "0: \n\t" : : ); /*filePath=syscall.c,line=133,column=1,abs_location_id=370005,funcName=syscall,srcFileId=37,locationId=5*/
   int num;
   struct proc *curproc = myproc();
 
