@@ -1,5 +1,12 @@
 set $lastcs = -1
 
+set logging file /crk/xv6-x86/gdb_log.txt
+set logging on
+
+set print pretty on
+set pagination off
+
+
 define hook-stop
   # There doesn't seem to be a good way to detect if we're in 16- or
   # 32-bit mode, but in 32-bit mode we always run with CS == 8 in the
@@ -20,8 +27,17 @@ define hook-stop
   set $lastcs = $cs
 end
 
-echo + target remote localhost:1234\n
-target remote localhost:1234
+echo + target remote localhost:26000\n
+target remote localhost:26000
 
 echo + symbol-file kernel\n
 symbol-file kernel
+
+rwatch *(long*)(0x7b00)
+commands
+    silent
+    printf "bootmain.c中函数bootmain()中变量pa值为:0x%x\n", $edx
+	continue
+end
+
+continue
