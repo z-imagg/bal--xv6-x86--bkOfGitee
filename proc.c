@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 #include "types.h"
 #include "defs.h"
 #include "param.h"
@@ -22,13 +23,13 @@ static void wakeup1(void *chan);
 
 void
 pinit(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=25,column=1,abs_location_id=330002,funcName=pinit,srcFileId=33,locationId=2*/
   initlock(&ptable.lock, "ptable");
 }
 
 // Must be called with interrupts disabled
 int
-cpuid() {
+cpuid() {__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=31,column=9,abs_location_id=330003,funcName=cpuid,srcFileId=33,locationId=3*/
   return mycpu()-cpus;
 }
 
@@ -36,7 +37,7 @@ cpuid() {
 // rescheduled between reading lapicid and running through the loop.
 struct cpu*
 mycpu(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330004,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=39,column=1,abs_location_id=330004,funcName=mycpu,srcFileId=33,locationId=4*/
   int apicid, i;
   
   if(readeflags()&FL_IF)
@@ -55,7 +56,7 @@ mycpu(void)
 // Disable interrupts so that we are not rescheduled
 // while reading proc from the cpu structure
 struct proc*
-myproc(void) {
+myproc(void) {__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330005,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=58,column=14,abs_location_id=330005,funcName=myproc,srcFileId=33,locationId=5*/
   struct cpu *c;
   struct proc *p;
   pushcli();
@@ -72,7 +73,7 @@ myproc(void) {
 // Otherwise return 0.
 static struct proc*
 allocproc(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330006,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=75,column=1,abs_location_id=330006,funcName=allocproc,srcFileId=33,locationId=6*/
   struct proc *p;
   char *sp;
 
@@ -119,7 +120,7 @@ found:
 // Set up first user process.
 void
 userinit(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330007,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=122,column=1,abs_location_id=330007,funcName=userinit,srcFileId=33,locationId=7*/
   struct proc *p;
   extern char _binary_initcode_start[], _binary_initcode_size[];
 
@@ -157,7 +158,7 @@ userinit(void)
 // Return 0 on success, -1 on failure.
 int
 growproc(int n)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330008,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=160,column=1,abs_location_id=330008,funcName=growproc,srcFileId=33,locationId=8*/
   uint sz;
   struct proc *curproc = myproc();
 
@@ -179,7 +180,7 @@ growproc(int n)
 // Caller must set state of returned proc to RUNNABLE.
 int
 fork(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330009,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=182,column=1,abs_location_id=330009,funcName=fork,srcFileId=33,locationId=9*/
   int i, pid;
   struct proc *np;
   struct proc *curproc = myproc();
@@ -226,7 +227,7 @@ fork(void)
 // until its parent calls wait() to find out it exited.
 void
 exit(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330010,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=229,column=1,abs_location_id=330010,funcName=exit,srcFileId=33,locationId=10*/
   struct proc *curproc = myproc();
   struct proc *p;
   int fd;
@@ -271,7 +272,7 @@ exit(void)
 // Return -1 if this process has no children.
 int
 wait(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330011,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=274,column=1,abs_location_id=330011,funcName=wait,srcFileId=33,locationId=11*/
   struct proc *p;
   int havekids, pid;
   struct proc *curproc = myproc();
@@ -321,7 +322,7 @@ wait(void)
 //      via swtch back to the scheduler.
 void
 scheduler(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330012,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=324,column=1,abs_location_id=330012,funcName=scheduler,srcFileId=33,locationId=12*/
   struct proc *p;
   struct cpu *c = mycpu();
   c->proc = 0;
@@ -364,7 +365,7 @@ scheduler(void)
 // there's no process.
 void
 sched(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330013,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=367,column=1,abs_location_id=330013,funcName=sched,srcFileId=33,locationId=13*/
   int intena;
   struct proc *p = myproc();
 
@@ -384,7 +385,7 @@ sched(void)
 // Give up the CPU for one scheduling round.
 void
 yield(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330014,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=387,column=1,abs_location_id=330014,funcName=yield,srcFileId=33,locationId=14*/
   acquire(&ptable.lock);  //DOC: yieldlock
   myproc()->state = RUNNABLE;
   sched();
@@ -395,7 +396,7 @@ yield(void)
 // will swtch here.  "Return" to user space.
 void
 forkret(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=398,column=1,abs_location_id=330000,funcName=forkret,srcFileId=33,locationId=0*/
   static int first = 1;
   // Still holding ptable.lock from scheduler.
   release(&ptable.lock);
@@ -416,7 +417,7 @@ forkret(void)
 // Reacquires lock when awakened.
 void
 sleep(void *chan, struct spinlock *lk)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330015,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=419,column=1,abs_location_id=330015,funcName=sleep,srcFileId=33,locationId=15*/
   struct proc *p = myproc();
   
   if(p == 0)
@@ -456,7 +457,7 @@ sleep(void *chan, struct spinlock *lk)
 // The ptable lock must be held.
 static void
 wakeup1(void *chan)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=459,column=1,abs_location_id=330001,funcName=wakeup1,srcFileId=33,locationId=1*/
   struct proc *p;
 
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
@@ -467,7 +468,7 @@ wakeup1(void *chan)
 // Wake up all processes sleeping on chan.
 void
 wakeup(void *chan)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330016,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=470,column=1,abs_location_id=330016,funcName=wakeup,srcFileId=33,locationId=16*/
   acquire(&ptable.lock);
   wakeup1(chan);
   release(&ptable.lock);
@@ -478,7 +479,7 @@ wakeup(void *chan)
 // to user space (see trap in trap.c).
 int
 kill(int pid)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330017,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=481,column=1,abs_location_id=330017,funcName=kill,srcFileId=33,locationId=17*/
   struct proc *p;
 
   acquire(&ptable.lock);
@@ -502,7 +503,7 @@ kill(int pid)
 // No lock to avoid wedging a stuck machine further.
 void
 procdump(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $330018,%%edi \n\t"    "0: \n\t" : : ); /*filePath=proc.c,line=505,column=1,abs_location_id=330018,funcName=procdump,srcFileId=33,locationId=18*/
   static char *states[] = {
   [UNUSED]    "unused",
   [EMBRYO]    "embryo",

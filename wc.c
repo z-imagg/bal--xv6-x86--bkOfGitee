@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 #include "types.h"
 #include "stat.h"
 #include "user.h"
@@ -6,7 +7,7 @@ char buf[512];
 
 void
 wc(int fd, char *name)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $160000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=wc.c,line=9,column=1,abs_location_id=160000,funcName=wc,srcFileId=16,locationId=0*/
   int i, n;
   int l, w, c, inword;
 
@@ -34,7 +35,7 @@ wc(int fd, char *name)
 
 int
 main(int argc, char *argv[])
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $160001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=wc.c,line=37,column=1,abs_location_id=160001,funcName=main,srcFileId=16,locationId=1*/
   int fd, i;
 
   if(argc <= 1){

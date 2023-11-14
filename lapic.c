@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 // The local APIC manages internal (non-I/O) interrupts.
 // See Chapter 8 & Appendix C of Intel processor manual volume 3.
 
@@ -46,14 +47,14 @@ volatile uint *lapic;  // Initialized in mp.c
 //PAGEBREAK!
 static void
 lapicw(int index, int value)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $270000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=lapic.c,line=49,column=1,abs_location_id=270000,funcName=lapicw,srcFileId=27,locationId=0*/
   lapic[index] = value;
   lapic[ID];  // wait for write to finish, by reading
 }
 
 void
 lapicinit(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $270001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=lapic.c,line=56,column=1,abs_location_id=270001,funcName=lapicinit,srcFileId=27,locationId=1*/
   if(!lapic)
     return;
 
@@ -99,7 +100,7 @@ lapicinit(void)
 
 int
 lapicid(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $270002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=lapic.c,line=102,column=1,abs_location_id=270002,funcName=lapicid,srcFileId=27,locationId=2*/
   if (!lapic)
     return 0;
   return lapic[ID] >> 24;
@@ -108,7 +109,7 @@ lapicid(void)
 // Acknowledge interrupt.
 void
 lapiceoi(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $270003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=lapic.c,line=111,column=1,abs_location_id=270003,funcName=lapiceoi,srcFileId=27,locationId=3*/
   if(lapic)
     lapicw(EOI, 0);
 }
@@ -127,7 +128,7 @@ microdelay(int us)
 // See Appendix B of MultiProcessor Specification.
 void
 lapicstartap(uchar apicid, uint addr)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $270004,%%edi \n\t"    "0: \n\t" : : ); /*filePath=lapic.c,line=130,column=1,abs_location_id=270004,funcName=lapicstartap,srcFileId=27,locationId=4*/
   int i;
   ushort *wrv;
 
@@ -173,7 +174,7 @@ lapicstartap(uchar apicid, uint addr)
 
 static uint
 cmos_read(uint reg)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $270005,%%edi \n\t"    "0: \n\t" : : ); /*filePath=lapic.c,line=176,column=1,abs_location_id=270005,funcName=cmos_read,srcFileId=27,locationId=5*/
   outb(CMOS_PORT,  reg);
   microdelay(200);
 
@@ -182,7 +183,7 @@ cmos_read(uint reg)
 
 static void
 fill_rtcdate(struct rtcdate *r)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $270006,%%edi \n\t"    "0: \n\t" : : ); /*filePath=lapic.c,line=185,column=1,abs_location_id=270006,funcName=fill_rtcdate,srcFileId=27,locationId=6*/
   r->second = cmos_read(SECS);
   r->minute = cmos_read(MINS);
   r->hour   = cmos_read(HOURS);
@@ -194,7 +195,7 @@ fill_rtcdate(struct rtcdate *r)
 // qemu seems to use 24-hour GWT and the values are BCD encoded
 void
 cmostime(struct rtcdate *r)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $270007,%%edi \n\t"    "0: \n\t" : : ); /*filePath=lapic.c,line=197,column=1,abs_location_id=270007,funcName=cmostime,srcFileId=27,locationId=7*/
   struct rtcdate t1, t2;
   int sb, bcd;
 
