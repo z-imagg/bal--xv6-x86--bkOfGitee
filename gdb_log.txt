@@ -1,0 +1,18 @@
++ target remote localhost:26000
+warning: A handler for the OS ABI "GNU/Linux" is not built into this configuration
+of GDB.  Attempting to continue with the default i8086 settings.
+
+The target architecture is assumed to be i8086
+[f000:fff0]    0xffff0:	ljmp   $0xf000,$0xe05b
+0x0000fff0 in ?? ()
++ symbol-file kernel
+Hardware read watchpoint 1: *(int*)(0x7c00-32)
+The target architecture is assumed to be i386
+=> 0x7d93:	mov    0x7bd0,%eax
+bootmain.c中函数bootmain()中变量pa值为:0x100000
+=> 0x7d93:	mov    0x7bd0,%eax
+bootmain.c中函数bootmain()中变量pa值为:0x108000
+=> 0x7d93:	mov    0x7bd0,%eax
+bootmain.c中函数bootmain()中变量pa值为:0x0
+.gdbinit:44: Error in sourced command file:
+Remote connection closed
