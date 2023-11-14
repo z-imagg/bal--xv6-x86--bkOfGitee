@@ -2,7 +2,13 @@
 
 static inline uchar
 inb(ushort port)
-{
+{      __asm__  __volatile__ ( 
+  "jmp 0f \n\t"      //跳到函数原始开头第一条语句. 0是标号, 向高地址（即向前，f是forward）  查找标号0.   
+   "or $0xFFFFFFFF,%%edi \n\t" //标记（以尽可能降低与正常指令相同的可能)     
+   "or $0x12345678,%%edi \n\t"   //函数id为0x12345678
+   "0: \n\t"         //函数原始开头第一条语句的标号. 标号0
+   :    
+   :  );//gcc内嵌汇编中jmp：向前(高地址)查找标号用f(forward)、向后(低地址)查找标号用b(backward)
   uchar data;
 
   asm volatile("in %1,%0" : "=a" (data) : "d" (port));

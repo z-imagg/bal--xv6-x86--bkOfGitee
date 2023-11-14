@@ -32,3 +32,18 @@ target remote localhost:26000
 
 echo + symbol-file kernel\n
 symbol-file kernel
+
+rwatch *(long*)(0x7b00)
+commands
+    silent
+    printf "entry.S中常量stack值为:0x%x\n", $edx
+	continue
+end
+
+rwatch *(long*)(0x7a00)
+commands
+    silent
+    printf "entry.S中常量KSTACKSIZE值为:0x%x\n", $edx
+	continue
+end
+continue
