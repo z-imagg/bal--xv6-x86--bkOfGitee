@@ -36,6 +36,27 @@ bootmain(void)
   eph = ph + elf->phnum;
   for(; ph < eph; ph++){
     pa = (uchar*)ph->paddr;
+    __asm__  __volatile__ (
+
+      "movl %%eax, 0x7c00-48 \n\t"   //备份eax
+
+      "movl %0, %%eax \n\t"   
+      "movl %%eax, 0x7c00-32 \n\t"   //记录变量pa值
+      "movl 0x7c00-32,%%eax \n\t"   //本条指令 无用，无故读一次 只是 为了gdb rwatch (内存读断点)能奏效
+
+      "movl 0x7c00-48,%%eax  \n\t"   //恢复eax
+      "nop \n\t"    
+      : 
+      : "m"(pa) //gas inline汇编 （即 AT&T inline汇编） 当有变量带入时, %寄存器 改为 %%寄存器
+       );// 正常查看pa值 
+	  /* gdb单步发现此些指令如下:
+0x7d81  mov    %eax,0x7bd0
+0x7d86  mov    -0x1c(%ebp),%eax
+0x7d89  mov    %eax,0x7be0
+0x7d8e  mov    0x7be0,%eax
+0x7d93  mov    0x7bd0,%eax
+0x7d98  nop 
+	  */
     readseg(pa, ph->filesz, ph->off);
     if(ph->memsz > ph->filesz)
       stosb(pa + ph->filesz, 0, ph->memsz - ph->filesz);
