@@ -28,51 +28,23 @@ OBJS = \
 	vectors.o\
 	vm.o\
 
-# Cross-compiling (e.g., on Mac OS X)
-# TOOLPREFIX = i386-jos-elf
 
-# Using native tools (e.g., on X86 Linux)
-#TOOLPREFIX = 
 
-# Try to infer the correct TOOLPREFIX if not set
-ifndef TOOLPREFIX
-TOOLPREFIX := $(shell if i386-jos-elf-objdump -i 2>&1 | grep '^elf32-i386$$' >/dev/null 2>&1; \
-	then echo 'i386-jos-elf-'; \
-	elif objdump -i 2>&1 | grep 'elf32-i386' >/dev/null 2>&1; \
-	then echo ''; \
-	else echo "***" 1>&2; \
-	echo "*** Error: Couldn't find an i386-*-elf version of GCC/binutils." 1>&2; \
-	echo "*** Is the directory with i386-jos-elf-gcc in your PATH?" 1>&2; \
-	echo "*** If your i386-*-elf toolchain is installed with a command" 1>&2; \
-	echo "*** prefix other than 'i386-jos-elf-', set your TOOLPREFIX" 1>&2; \
-	echo "*** environment variable to that prefix and run 'make' again." 1>&2; \
-	echo "*** To turn off this error, run 'gmake TOOLPREFIX= ...'." 1>&2; \
-	echo "***" 1>&2; exit 1; fi)
+
+#不管是在x64系统下，还是x32系统下，必须要使用x32的编译器编译xv6.img
+#  因为实测 bochs启动不了x64编译器编译的xv6.img, 原因待定.
+ifeq ($(shell uname -m),x86_64)
+# 如果是64位系统，则设置CC为i686-linux-gnu-gcc    
+TOOLPREFIX := i686-linux-gnu-
+else    # 如果是32位系统，则设置CC为gcc    
+TOOLPREFIX := gcc
 endif
 
-# If the makefile can't find QEMU, specify its path here
-# QEMU = qemu-system-i386
-
-# Try to infer the correct QEMU
-ifndef QEMU
-QEMU = $(shell if which qemu > /dev/null; \
-	then echo qemu; exit; \
-	elif which qemu-system-i386 > /dev/null; \
-	then echo qemu-system-i386; exit; \
-	elif which qemu-system-x86_64 > /dev/null; \
-	then echo qemu-system-x86_64; exit; \
-	else \
-	qemu=/Applications/Q.app/Contents/MacOS/i386-softmmu.app/Contents/MacOS/i386-softmmu; \
-	if test -x $$qemu; then echo $$qemu; exit; fi; fi; \
-	echo "***" 1>&2; \
-	echo "*** Error: Couldn't find a working QEMU executable." 1>&2; \
-	echo "*** Is the directory containing the qemu binary in your PATH" 1>&2; \
-	echo "*** or have you tried setting the QEMU variable in Makefile?" 1>&2; \
-	echo "***" 1>&2; exit 1)
-endif
+#使用32位的qemu, 即 qemu-system-i386
+QEMU = qemu-system-i386
 
 CC = $(TOOLPREFIX)gcc
-AS = $(TOOLPREFIX)gas
+AS = $(TOOLPREFIX)as
 LD = $(TOOLPREFIX)ld
 OBJCOPY = $(TOOLPREFIX)objcopy
 OBJDUMP = $(TOOLPREFIX)objdump
