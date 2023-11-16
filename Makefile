@@ -37,7 +37,7 @@ ifeq ($(shell uname -m),x86_64)
 # 如果是64位系统，则设置CC为i686-linux-gnu-gcc    
 TOOLPREFIX := i686-linux-gnu-
 else    # 如果是32位系统，则设置CC为gcc    
-TOOLPREFIX := gcc
+TOOLPREFIX := 
 endif
 
 #使用32位的qemu, 即 qemu-system-i386
