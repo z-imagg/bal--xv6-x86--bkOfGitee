@@ -1,3 +1,4 @@
+filePath,line,column,abs_location_id,funcName
 ulib.c,9,1,0,strcpy
 ulib.c,20,1,1,strcmp
 ulib.c,28,1,2,strlen
