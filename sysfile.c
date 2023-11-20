@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 //
 // File-system system calls.
 // Mostly argument checking, since we don't trust
@@ -20,7 +21,7 @@
 // and return both the descriptor and the corresponding struct file.
 static int
 argfd(int n, int *pfd, struct file **pf)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=23,column=1,abs_location_id=380000,funcName=argfd,srcFileId=38,locationId=0*/
   int fd;
   struct file *f;
 
@@ -39,7 +40,7 @@ argfd(int n, int *pfd, struct file **pf)
 // Takes over file reference from caller on success.
 static int
 fdalloc(struct file *f)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=42,column=1,abs_location_id=380001,funcName=fdalloc,srcFileId=38,locationId=1*/
   int fd;
   struct proc *curproc = myproc();
 
@@ -54,7 +55,7 @@ fdalloc(struct file *f)
 
 int
 sys_dup(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=57,column=1,abs_location_id=380002,funcName=sys_dup,srcFileId=38,locationId=2*/
   struct file *f;
   int fd;
 
@@ -68,7 +69,7 @@ sys_dup(void)
 
 int
 sys_read(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=71,column=1,abs_location_id=380003,funcName=sys_read,srcFileId=38,locationId=3*/
   struct file *f;
   int n;
   char *p;
@@ -80,7 +81,7 @@ sys_read(void)
 
 int
 sys_write(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380004,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=83,column=1,abs_location_id=380004,funcName=sys_write,srcFileId=38,locationId=4*/
   struct file *f;
   int n;
   char *p;
@@ -92,7 +93,7 @@ sys_write(void)
 
 int
 sys_close(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380005,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=95,column=1,abs_location_id=380005,funcName=sys_close,srcFileId=38,locationId=5*/
   int fd;
   struct file *f;
 
@@ -105,7 +106,7 @@ sys_close(void)
 
 int
 sys_fstat(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380006,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=108,column=1,abs_location_id=380006,funcName=sys_fstat,srcFileId=38,locationId=6*/
   struct file *f;
   struct stat *st;
 
@@ -117,7 +118,7 @@ sys_fstat(void)
 // Create the path new as a link to the same inode as old.
 int
 sys_link(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380007,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=120,column=1,abs_location_id=380007,funcName=sys_link,srcFileId=38,locationId=7*/
   char name[DIRSIZ], *new, *old;
   struct inode *dp, *ip;
 
@@ -167,7 +168,7 @@ bad:
 // Is the directory dp empty except for "." and ".." ?
 static int
 isdirempty(struct inode *dp)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380008,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=170,column=1,abs_location_id=380008,funcName=isdirempty,srcFileId=38,locationId=8*/
   int off;
   struct dirent de;
 
@@ -183,7 +184,7 @@ isdirempty(struct inode *dp)
 //PAGEBREAK!
 int
 sys_unlink(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380009,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=186,column=1,abs_location_id=380009,funcName=sys_unlink,srcFileId=38,locationId=9*/
   struct inode *ip, *dp;
   struct dirent de;
   char name[DIRSIZ], *path;
@@ -240,7 +241,7 @@ bad:
 
 static struct inode*
 create(char *path, short type, short major, short minor)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380010,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=243,column=1,abs_location_id=380010,funcName=create,srcFileId=38,locationId=10*/
   struct inode *ip, *dp;
   char name[DIRSIZ];
 
@@ -284,7 +285,7 @@ create(char *path, short type, short major, short minor)
 
 int
 sys_open(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380011,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=287,column=1,abs_location_id=380011,funcName=sys_open,srcFileId=38,locationId=11*/
   char *path;
   int fd, omode;
   struct file *f;
@@ -334,7 +335,7 @@ sys_open(void)
 
 int
 sys_mkdir(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380012,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=337,column=1,abs_location_id=380012,funcName=sys_mkdir,srcFileId=38,locationId=12*/
   char *path;
   struct inode *ip;
 
@@ -350,7 +351,7 @@ sys_mkdir(void)
 
 int
 sys_mknod(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380013,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=353,column=1,abs_location_id=380013,funcName=sys_mknod,srcFileId=38,locationId=13*/
   struct inode *ip;
   char *path;
   int major, minor;
@@ -370,7 +371,7 @@ sys_mknod(void)
 
 int
 sys_chdir(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380014,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=373,column=1,abs_location_id=380014,funcName=sys_chdir,srcFileId=38,locationId=14*/
   char *path;
   struct inode *ip;
   struct proc *curproc = myproc();
@@ -395,7 +396,7 @@ sys_chdir(void)
 
 int
 sys_exec(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380015,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=398,column=1,abs_location_id=380015,funcName=sys_exec,srcFileId=38,locationId=15*/
   char *path, *argv[MAXARG];
   int i;
   uint uargv, uarg;
@@ -421,7 +422,7 @@ sys_exec(void)
 
 int
 sys_pipe(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $380016,%%edi \n\t"    "0: \n\t" : : ); /*filePath=sysfile.c,line=424,column=1,abs_location_id=380016,funcName=sys_pipe,srcFileId=38,locationId=16*/
   int *fd;
   struct file *rf, *wf;
   int fd0, fd1;

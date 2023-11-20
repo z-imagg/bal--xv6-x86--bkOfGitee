@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 #include "types.h"
 #include "param.h"
 #include "memlayout.h"
@@ -9,7 +10,7 @@
 
 int
 exec(char *path, char **argv)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $200000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=exec.c,line=12,column=1,abs_location_id=200000,funcName=exec,srcFileId=20,locationId=0*/
   char *s, *last;
   int i, off;
   uint argc, sz, sp, ustack[3+MAXARG+1];

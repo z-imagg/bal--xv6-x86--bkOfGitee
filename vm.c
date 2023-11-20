@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 #include "param.h"
 #include "types.h"
 #include "defs.h"
@@ -14,7 +15,7 @@ pde_t *kpgdir;  // for use in scheduler()
 // Run once on entry on each CPU.
 void
 seginit(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=17,column=1,abs_location_id=420000,funcName=seginit,srcFileId=42,locationId=0*/
   struct cpu *c;
 
   // Map "logical" addresses to virtual addresses using identity map.
@@ -34,7 +35,7 @@ seginit(void)
 // create any required page table pages.
 static pte_t *
 walkpgdir(pde_t *pgdir, const void *va, int alloc)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=37,column=1,abs_location_id=420001,funcName=walkpgdir,srcFileId=42,locationId=1*/
   pde_t *pde;
   pte_t *pgtab;
 
@@ -59,7 +60,7 @@ walkpgdir(pde_t *pgdir, const void *va, int alloc)
 // be page-aligned.
 static int
 mappages(pde_t *pgdir, void *va, uint size, uint pa, int perm)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=62,column=1,abs_location_id=420002,funcName=mappages,srcFileId=42,locationId=2*/
   char *a, *last;
   pte_t *pte;
 
@@ -117,7 +118,7 @@ static struct kmap {
 // Set up kernel part of a page table.
 pde_t*
 setupkvm(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=120,column=1,abs_location_id=420003,funcName=setupkvm,srcFileId=42,locationId=3*/
   pde_t *pgdir;
   struct kmap *k;
 
@@ -139,7 +140,7 @@ setupkvm(void)
 // space for scheduler processes.
 void
 kvmalloc(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420004,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=142,column=1,abs_location_id=420004,funcName=kvmalloc,srcFileId=42,locationId=4*/
   kpgdir = setupkvm();
   switchkvm();
 }
@@ -148,14 +149,14 @@ kvmalloc(void)
 // for when no process is running.
 void
 switchkvm(void)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420005,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=151,column=1,abs_location_id=420005,funcName=switchkvm,srcFileId=42,locationId=5*/
   lcr3(V2P(kpgdir));   // switch to the kernel page table
 }
 
 // Switch TSS and h/w page table to correspond to process p.
 void
 switchuvm(struct proc *p)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420006,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=158,column=1,abs_location_id=420006,funcName=switchuvm,srcFileId=42,locationId=6*/
   if(p == 0)
     panic("switchuvm: no process");
   if(p->kstack == 0)
@@ -181,7 +182,7 @@ switchuvm(struct proc *p)
 // sz must be less than a page.
 void
 inituvm(pde_t *pgdir, char *init, uint sz)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420007,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=184,column=1,abs_location_id=420007,funcName=inituvm,srcFileId=42,locationId=7*/
   char *mem;
 
   if(sz >= PGSIZE)
@@ -196,7 +197,7 @@ inituvm(pde_t *pgdir, char *init, uint sz)
 // and the pages from addr to addr+sz must already be mapped.
 int
 loaduvm(pde_t *pgdir, char *addr, struct inode *ip, uint offset, uint sz)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420008,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=199,column=1,abs_location_id=420008,funcName=loaduvm,srcFileId=42,locationId=8*/
   uint i, pa, n;
   pte_t *pte;
 
@@ -220,7 +221,7 @@ loaduvm(pde_t *pgdir, char *addr, struct inode *ip, uint offset, uint sz)
 // newsz, which need not be page aligned.  Returns new size or 0 on error.
 int
 allocuvm(pde_t *pgdir, uint oldsz, uint newsz)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420009,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=223,column=1,abs_location_id=420009,funcName=allocuvm,srcFileId=42,locationId=9*/
   char *mem;
   uint a;
 
@@ -254,7 +255,7 @@ allocuvm(pde_t *pgdir, uint oldsz, uint newsz)
 // process size.  Returns the new process size.
 int
 deallocuvm(pde_t *pgdir, uint oldsz, uint newsz)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420010,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=257,column=1,abs_location_id=420010,funcName=deallocuvm,srcFileId=42,locationId=10*/
   pte_t *pte;
   uint a, pa;
 
@@ -282,7 +283,7 @@ deallocuvm(pde_t *pgdir, uint oldsz, uint newsz)
 // in the user part.
 void
 freevm(pde_t *pgdir)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420011,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=285,column=1,abs_location_id=420011,funcName=freevm,srcFileId=42,locationId=11*/
   uint i;
 
   if(pgdir == 0)
@@ -301,7 +302,7 @@ freevm(pde_t *pgdir)
 // page beneath the user stack.
 void
 clearpteu(pde_t *pgdir, char *uva)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420012,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=304,column=1,abs_location_id=420012,funcName=clearpteu,srcFileId=42,locationId=12*/
   pte_t *pte;
 
   pte = walkpgdir(pgdir, uva, 0);
@@ -314,7 +315,7 @@ clearpteu(pde_t *pgdir, char *uva)
 // of it for a child.
 pde_t*
 copyuvm(pde_t *pgdir, uint sz)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420013,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=317,column=1,abs_location_id=420013,funcName=copyuvm,srcFileId=42,locationId=13*/
   pde_t *d;
   pte_t *pte;
   uint pa, i, flags;
@@ -348,7 +349,7 @@ bad:
 // Map user virtual address to kernel address.
 char*
 uva2ka(pde_t *pgdir, char *uva)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420014,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=351,column=1,abs_location_id=420014,funcName=uva2ka,srcFileId=42,locationId=14*/
   pte_t *pte;
 
   pte = walkpgdir(pgdir, uva, 0);
@@ -364,7 +365,7 @@ uva2ka(pde_t *pgdir, char *uva)
 // uva2ka ensures this only works for PTE_U pages.
 int
 copyout(pde_t *pgdir, uint va, void *p, uint len)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $420015,%%edi \n\t"    "0: \n\t" : : ); /*filePath=vm.c,line=367,column=1,abs_location_id=420015,funcName=copyout,srcFileId=42,locationId=15*/
   char *buf, *pa0;
   uint n, va0;
 

@@ -70,7 +70,7 @@ QEMU = $(shell if which qemu > /dev/null; \
 	echo "*** or have you tried setting the QEMU variable in Makefile?" 1>&2; \
 	echo "***" 1>&2; exit 1)
 endif
-#/llvm_release_home/clang+llvm-15.0.0-x86_64-linux-gnu-rhel-8.4/bin/clang++  -Xclang   -load -Xclang /pubx/analyze_code/clang-ctk/cmake-build-debug/lib/libCTk.so  -Xclang   -add-plugin -Xclang  CTk  -c /pubx/analyze_code/clang-ctk/funcIdBase/test_main.cpp
+#/llvm_release_home/clang+llvm-15.0.0-x86_64-linux-gnu-rhel-8.4/bin/clang++  -Xclang   -load -Xclang /crk/clang-add-funcIdAsm/cmake-build-debug/lib/libCTk.so  -Xclang   -add-plugin -Xclang  CTk  -c /crk/clang-add-funcIdAsm/funcIdBase/test_main.cpp
 GCC=gcc
 CC = /llvm_release_home/clang+llvm-15.0.0-x86_64-linux-gnu-rhel-8.4/bin/clang
 AS = $(TOOLPREFIX)gas
@@ -82,7 +82,7 @@ OBJDUMP = $(TOOLPREFIX)objdump
 C_FLAGS += -fno-pic -static -fno-builtin -fno-strict-aliasing -O2  -MD -ggdb -m32 -Werror -fno-omit-frame-pointer
 C_FLAGS += $(shell $(CC) -fno-stack-protector -E -x c /dev/null >/dev/null 2>&1 && echo -fno-stack-protector)
 
-CFLAGS = -w -Xclang   -load -Xclang /pubx/analyze_code/clang-ctk/cmake-build-debug/lib/libCTk.so  -Xclang   -add-plugin -Xclang  CTk
+CFLAGS = -w -Xclang   -load -Xclang /crk/clang-add-funcIdAsm/cmake-build-debug/lib/libCTk.so  -Xclang   -add-plugin -Xclang  CTk
 CFLAGS += $(C_FLAGS)
 
 ASFLAGS = -m32 -gdwarf-2
