@@ -161,3 +161,11 @@ gdb
 ```shell
 make clean;  make addFuncIdByClangPlugin; make x86.o
 ```
+
+
+
+
+# 挂载远端linux目录(通过sshfs)
+```  sshfs  z@10.0.4.101:/crk /asus/crk ```
+
+> 10.0.4.101 是远端华硕笔记本电脑
