@@ -1,3 +1,4 @@
+#pragma message("funcId_asm_inserted")
 #include "types.h"
 #include "defs.h"
 #include "param.h"
@@ -21,7 +22,7 @@ struct pipe {
 
 int
 pipealloc(struct file **f0, struct file **f1)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $320000,%%edi \n\t"    "0: \n\t" : : ); /*filePath=pipe.c,line=24,column=1,abs_location_id=320000,funcName=pipealloc,srcFileId=32,locationId=0*/
   struct pipe *p;
 
   p = 0;
@@ -58,7 +59,7 @@ pipealloc(struct file **f0, struct file **f1)
 
 void
 pipeclose(struct pipe *p, int writable)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $320001,%%edi \n\t"    "0: \n\t" : : ); /*filePath=pipe.c,line=61,column=1,abs_location_id=320001,funcName=pipeclose,srcFileId=32,locationId=1*/
   acquire(&p->lock);
   if(writable){
     p->writeopen = 0;
@@ -77,7 +78,7 @@ pipeclose(struct pipe *p, int writable)
 //PAGEBREAK: 40
 int
 pipewrite(struct pipe *p, char *addr, int n)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $320002,%%edi \n\t"    "0: \n\t" : : ); /*filePath=pipe.c,line=80,column=1,abs_location_id=320002,funcName=pipewrite,srcFileId=32,locationId=2*/
   int i;
 
   acquire(&p->lock);
@@ -99,7 +100,7 @@ pipewrite(struct pipe *p, char *addr, int n)
 
 int
 piperead(struct pipe *p, char *addr, int n)
-{
+{__asm__  __volatile__ (   "jmp 0f \n\t"    "or $0xFFFFFFFF,%%edi \n\t"    "or $320003,%%edi \n\t"    "0: \n\t" : : ); /*filePath=pipe.c,line=102,column=1,abs_location_id=320003,funcName=piperead,srcFileId=32,locationId=3*/
   int i;
 
   acquire(&p->lock);
