@@ -35,7 +35,7 @@ OBJS = \
 #  因为实测 bochs启动不了x64编译器编译的xv6.img, 原因待定.
 ifeq ($(shell uname -m),x86_64)
 # 如果是64位系统，则设置CC为i686-linux-gnu-gcc    
-$(shell i686-linux-gnu-gcc || sudo apt install -y gcc-i686-linux-gnu) || $(error "当前为64位系统, 为编译xv6-x86, 安装gcc-i686-linux-gnu失败,退出")
+$(shell i686-linux-gnu-gcc --version > /dev/null || sudo apt install -y gcc-i686-linux-gnu) || $(error "当前为64位系统, 为编译xv6-x86, 安装gcc-i686-linux-gnu失败,退出")
 TOOLPREFIX := i686-linux-gnu-
 else    # 如果是32位系统，则设置CC为gcc    
 TOOLPREFIX := 
