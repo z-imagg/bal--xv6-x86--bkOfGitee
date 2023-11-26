@@ -34,9 +34,16 @@ OBJS = \
 #不管是在x64系统下，还是x32系统下，必须要使用x32的编译器编译xv6.img
 #  因为实测 bochs启动不了x64编译器编译的xv6.img, 原因待定.
 ifeq ($(shell uname -m),x86_64)
+
 # 如果是64位系统，则设置CC为i686-linux-gnu-gcc    
-$(shell i686-linux-gnu-gcc --version > /dev/null || sudo apt install -y gcc-i686-linux-gnu) || $(error "当前为64位系统, 为编译xv6-x86, 安装gcc-i686-linux-gnu失败,退出")
+installX86GccOk=$(shell i686-linux-gnu-gcc --version 2>/dev/null 1>/dev/null  || sudo apt install -y gcc-i686-linux-gnu 2>/dev/null 1>/dev/null || echo "false")
+$(info installX86GccOk==$(installX86GccOk))
+ifeq ($(installX86GccOk),false)
+$(error "当前为64位系统, 为编译xv6-x86, 安装gcc-i686-linux-gnu失败,退出")
+endif
+
 TOOLPREFIX := i686-linux-gnu-
+
 else    # 如果是32位系统，则设置CC为gcc    
 TOOLPREFIX := 
 endif
