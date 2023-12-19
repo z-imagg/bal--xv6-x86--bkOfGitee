@@ -191,7 +191,7 @@ bochs : fs.img xv6.img
 	if [ ! -e .bochsrc ]; then ln -s dot-bochsrc .bochsrc; fi
 	/crk/oslab/bochs/bochs-gdb 
 
-# /crk/bochs/bochs/bochs -q
+# /bal/bochs/bochs -q
 
 # try to generate a unique GDB port
 GDBPORT = $(shell expr `id -u` % 5000 + 25000)
